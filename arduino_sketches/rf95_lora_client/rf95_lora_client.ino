@@ -9,23 +9,20 @@ RH_RF95 rf95;
 void setup() 
 {
   Serial.begin(9600);
-  while (!Serial) ; // Wait for serial port to be available
+  while (!Serial) ;
   if (!rf95.init())
     Serial.println("init failed");
 }
 
 void loop()
 {
-  uint8_t depth_string[6];
+  uint8_t depth_string[7];
   
-  Serial.println("Sending to rf95_server");
-
   // read the water level:
   float depth = read_water_level();
   
   // send a message to the rf95_server:
-  snprintf(depth_string, 6, "%04.2f", depth);
-  send_via_rf95(depth_string);
+  send_via_rf95(depth);;
   
   delay(400);
 }
@@ -44,7 +41,7 @@ float read_water_level()
 
   Depth = (Iamp-4) / 3.2;
   
-  Serial.print("Raw = ");
+  Serial.print("\n\nRaw = ");
   Serial.print(Raw_value);
   Serial.println("");
   Serial.print("Volatge = ");
@@ -63,8 +60,12 @@ float read_water_level()
 /*
  * Sends a given string via RF95.
  */
-void send_via_rf95(uint8_t depth_string[6]) {
-  rf95.send(depth_string, sizeof(depth_string));
+void send_via_rf95(float depth) {
+  String s = String(depth);
+  uint8_t data[s.length()];
+  s.toCharArray(data, s.length());
+  rf95.send(data, sizeof(data));
+  
   rf95.waitPacketSent();
   
   uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
