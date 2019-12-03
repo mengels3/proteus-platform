@@ -1,0 +1,1111 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "cacheTimeout": null,
+      "datasource": "well",
+      "doInit": {},
+      "format": "short",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "handleMetric": {},
+      "id": 8,
+      "interval": null,
+      "js_code": "\nconsole.log(ctrl.series);\nif(ctrl.series && ctrl.series[0].datapoints){\n    var percentage = ctrl.series[0].datapoints[0][0] * 100;\n    svgnode.getElementById(\"stop1\").setAttribute(\"offset\",percentage+\"%\");\n    svgnode.getElementById(\"stop2\").setAttribute(\"offset\",percentage+\"%\");\n}",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "options": {},
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\r\n<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->\r\n<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n\t viewBox=\"0 0 512 512\" style=\"enable-background:new 0 0 512 512;\" xml:space=\"preserve\">\r\n\t \r\n<g>\r\n\t<g>\r\n\t    <linearGradient y2=\"0%\" x2=\"100%\" y1=\"100%\" x1=\"100%\" id=\"lg\">\r\n\t\t\t<stop stop-color=\"royalblue\" offset=\"50%\" id=\"stop1\"/>\r\n\t\t\t<stop stop-color=\"transparent\" offset=\"50%\" id=\"stop2\"/>\r\n\t\t</linearGradient>\r\n\t\t<rect x=\"0\" y=\"278.261\" width=\"434\" height=\"234\" fill=\"url(#lg)\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"66.783\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"333.913\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect y=\"367.304\" width=\"33.391\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M417.391,278.261h-16.696v55.652h33.391v-38.956C434.087,285.736,426.612,278.261,417.391,278.261z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"267.13\" y=\"278.261\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"200.348\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"133.565\" y=\"278.261\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M400.696,456.348V512h16.696c9.22,0,16.696-7.475,16.696-16.696v-38.956H400.696z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"133.565\" y=\"456.348\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"267.13\" y=\"456.348\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M0,456.348v38.956C0,504.525,7.475,512,16.696,512h83.478v-55.652H0z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M16.696,278.261C7.475,278.261,0,285.736,0,294.957v38.956h100.174v-55.652H16.696z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M495.304,100.174h-27.826V50.087c0-9.217-7.479-16.696-16.696-16.696h-50.087V16.696C400.696,7.479,393.217,0,384,0\r\n\t\t\ts-16.696,7.479-16.696,16.696v16.696h-36.253C324.175,13.94,305.633,0,283.826,0H150.261c-21.807,0-40.349,13.94-47.225,33.391\r\n\t\t\tH66.783V16.696C66.783,7.479,59.304,0,50.087,0S33.391,7.479,33.391,16.696V244.87h33.391V66.783h36.253\r\n\t\t\tc6.876,19.452,25.419,33.391,47.225,33.391h50.087v33.391h-38.957c-5.239,0-10.174,2.456-13.326,6.642\r\n\t\t\tc-3.163,4.185-4.163,9.609-2.728,14.641l22.261,77.913c2.055,7.164,8.598,12.109,16.055,12.109h66.783\r\n\t\t\tc7.456,0,14-4.945,16.055-12.109l22.261-77.913c1.435-5.032,0.435-10.457-2.728-14.641c-3.152-4.185-8.087-6.642-13.326-6.642\r\n\t\t\th-38.957v-33.391h50.087c21.807,0,40.349-13.94,47.225-33.391h36.253V244.87h33.391V66.783h33.391v50.087\r\n\t\t\tc0,9.217,7.479,16.696,16.696,16.696h44.522c9.217,0,16.696-7.479,16.696-16.696S504.521,100.174,495.304,100.174z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n</svg>\r\n",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "well",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"water_level\" FROM \"well\" WHERE $timeFilter order by time desc LIMIT 1",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "water_level"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Last Measurement ",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "well",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 22,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "well",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"water_level\" FROM \"well\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "water_level"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Water Level over Time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": "Water Level in Meter",
+          "logBase": 1,
+          "max": "2",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "well",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "well",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "water_level"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average Water Level",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "columns": [],
+      "datasource": "well",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 6,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "well",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Well Id"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "water_level"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Water Level (in m)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Water Level Values",
+      "transform": "table",
+      "type": "table"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s"
+    ]
+  },
+  "timezone": "",
+  "title": "Water Level Monitoring",
+  "uid": "IbLNiD-Zz",
+  "version": 7
+}
