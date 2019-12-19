@@ -1,0 +1,15 @@
+# config file version
+apiVersion: 1
+
+deleteDatasources:
+  - name: sedi
+    orgId: 1
+
+datasources:
+- name: sedi
+  type: postgres
+  host: localhost:5432
+  password: grafana
+  user: read
+  database: sedi
+  editable: false
