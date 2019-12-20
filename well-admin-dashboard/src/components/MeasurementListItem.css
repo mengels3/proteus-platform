@@ -1,4 +1,4 @@
-.rounded-borders{
+.measurement-item-background{
     border: 2px solid transparent;
     border-radius: 10px;
     margin-top: 15px;
@@ -6,11 +6,31 @@
     margin-right: 15px;
     padding: 15px;
     background-color:limegreen;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.measurement-item-overview{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     font-size: x-large;
+}
+
+.measurement-item-overview-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    font-size: x-large;
+}
+
+.detail-text{
+    font-size: small;
+    margin-bottom: 0;
 }
 
 .icon-div{
@@ -24,8 +44,37 @@
     margin-left: 15px;
 }
 
+.column{
+    text-align: start;
+}
+
 .text{
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.white{
     color: white;
+}
+
+.measurements-text{
+    margin-top: 0   ;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: medium;
+}
+
+.margin-left{
+    margin-left: 15px;
+}
+
+.measurements-listing-row{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.measurements-icon{
+    margin-left: 20px;
+    margin-right: 10px;
 }
