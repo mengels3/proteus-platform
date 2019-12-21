@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  dashboard:
+    image: sedichile/dashboard
+    networks:
+      app_net:
+        ipv4_address: 172.18.18.10
+    depends_on: 
+      - db
+    ports:
+      - "3000:3000"
+    container_name: sedi-grafana
+    restart: always
+  db:
+    image: sedichile/database
+    ports:
+      - "5432:5432"
+    container_name: sedi-postgres
+    restart: always
+    networks:
+      app_net:
+        ipv4_address: 172.18.18.11
+
+networks:
+  app_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.18.0/24
+        gateway: 172.18.18.1
