@@ -1,0 +1,19 @@
+.measurement-listing{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.measurement-row{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.icon:hover{
+    color:red;
+    cursor: pointer;
+}
