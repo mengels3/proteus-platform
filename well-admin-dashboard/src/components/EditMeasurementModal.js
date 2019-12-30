@@ -9,10 +9,14 @@ class EditMeasurementModal extends React.Component {
     data: this.props.data
   };
 
+  // i bet this is a dirty workaround
+  getData() {
+    return this.state.data ?? this.props.data;
+  }
+
   deleteMeasurement(measurement) {
     // little hack because i suck at react apparently
-    const sData = this.state.data ?? this.props.data;
-
+    const sData = { ...this.getData() };
     const updatedMeasurements = sData.measurements.filter(m => m.name !== measurement.name);
 
     sData.measurements = updatedMeasurements;
@@ -28,7 +32,7 @@ class EditMeasurementModal extends React.Component {
   }
 
   onSave() {
-    this.props.onSave(this.state.data);
+    this.props.onSave(this.getData());
     this.setState({ data: null });
   }
 
@@ -47,11 +51,11 @@ class EditMeasurementModal extends React.Component {
     return (
       <Modal show={this.props.show} onHide={() => this.props.onClose()}>
         <Modal.Header closeButton>
-          <Modal.Title>{this.props.data?.name}</Modal.Title>
+          <Modal.Title>{this.getData()?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div class="measurement-listing">
-            {this.props.data?.measurements.map(measurement => this.renderMeasurement(measurement))}
+            {this.getData()?.measurements.map(measurement => this.renderMeasurement(measurement))}
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -36,12 +36,14 @@ class App extends React.Component {
   }
 
   onEditModalSave(updatedMeasurementItem) {
-    console.log(updatedMeasurementItem);
-    console.log(this.state);
-    const replaceIndex = this.state.data.indexOf(item => item.id === updatedMeasurementItem.id);
+    const replaceIndex = this.state.data.findIndex(item => item.id === updatedMeasurementItem.id);
+    console.log(replaceIndex);
 
     var dataCopy = this.state.data.slice();
     dataCopy[replaceIndex] = updatedMeasurementItem;
+
+    console.log("save");
+    console.log(dataCopy);
 
     this.setState({
       showEditModal: false,
