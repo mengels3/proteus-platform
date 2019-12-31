@@ -6,6 +6,7 @@ import EditMeasurementModal from "./components/EditMeasurementModal";
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       data: [
         {
@@ -55,12 +56,28 @@ class App extends React.Component {
     this.setState({ showEditModal: false });
   }
 
+  deleteMeasurementPoint(id) {
+    console.log("delete: " + id);
+    const deleteIndex = this.state.data.findIndex(item => item.id === id);
+    const dataCopy = this.state.data.slice();
+
+    dataCopy.splice(deleteIndex, 1);
+
+    this.setState({
+      data: dataCopy
+    });
+  }
+
   render() {
     return (
       <>
         <ul class="list-group">
           {this.state.data.map(item => (
-            <MeasurementListItem data={item} onEdit={() => this.showEditModal(item)} />
+            <MeasurementListItem
+              data={item}
+              onEdit={() => this.showEditModal(item)}
+              onDelete={id => this.deleteMeasurementPoint(id)}
+            />
           ))}
         </ul>
         <EditMeasurementModal

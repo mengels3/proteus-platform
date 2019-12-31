@@ -64,7 +64,7 @@ class MeasurementListItem extends React.Component {
               <div class="list-item-icon" onClick={() => this.props.onEdit()}>
                 <FontAwesomeIcon icon={faPen} />
               </div>
-              <div class="list-item-icon">
+              <div class="list-item-icon" onClick={() => this.props.onDelete(this.props.data.id)}>
                 <FontAwesomeIcon icon={faTrash} />
               </div>
             </div>
