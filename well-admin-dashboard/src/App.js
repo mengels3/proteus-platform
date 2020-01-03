@@ -1,33 +1,9 @@
 import React from "react";
 import "./App.css";
-import MeasurementListItem from "./components/MeasurementListItem";
-import EditMeasurementModal from "./components/EditMeasurementModal";
+import MeasurementPointListContainer from './container-components/MeasurementPointListContainer'
+import EditMeasurementModalContainer from "./container-components/EditMeasurementModalContainer";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: [
-        {
-          name: "Chile-01",
-          id: "e34810f0-8471-495b-aa3e-a338dc8b8de2",
-          measurements: [
-            { name: "Temperature" },
-            { name: "pH" },
-            { name: "Water Level", parameters: [{ name: "diameter", value: 0.5 }] }
-          ]
-        },
-        {
-          name: "Chile-02",
-          id: "7c56dcca-1ec2-4b9c-9455-77830fc313e2",
-          measurements: [{ name: "Temperature" }, { name: "pH" }]
-        }
-      ],
-      showEditModal: false,
-      selectedData: null
-    };
-  }
 
   showEditModal(data) {
     this.setState({
@@ -71,21 +47,8 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <ul class="list-group">
-          {this.state.data.map(item => (
-            <MeasurementListItem
-              data={item}
-              onEdit={() => this.showEditModal(item)}
-              onDelete={id => this.deleteMeasurementPoint(id)}
-            />
-          ))}
-        </ul>
-        <EditMeasurementModal
-          data={this.state.selectedData}
-          show={this.state.showEditModal}
-          onClose={() => this.hideEditModal()}
-          onSave={updatedMeasurementItem => this.onEditModalSave(updatedMeasurementItem)}
-        />
+        <MeasurementPointListContainer/>
+        <EditMeasurementModalContainer/>
       </>
     );
   }

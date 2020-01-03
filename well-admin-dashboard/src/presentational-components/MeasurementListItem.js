@@ -38,25 +38,6 @@ class MeasurementListItem extends React.Component {
                       <p class="text">{item.name}</p>
                     </div>
                   ))}
-
-                  {/* <div class="measurements-info">
-                    <div class="measurements-icon">
-                      <FontAwesomeIcon icon={faThermometerHalf} />
-                    </div>
-                    <p class="text">Temperature</p>
-                  </div>
-                  <div class="measurements-info">
-                    <div class="measurements-icon margin-left">
-                      <FontAwesomeIcon icon={faTint} />
-                    </div>
-                    <p class="text">pH</p>
-                  </div>
-                  <div class="measurements-info">
-                    <div class="measurements-icon margin-left">
-                      <FontAwesomeIcon icon={faWater} />
-                    </div>
-                    <p class="text">Water level</p>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -64,9 +45,9 @@ class MeasurementListItem extends React.Component {
               <div class="list-item-icon" onClick={() => this.props.onEdit()}>
                 <FontAwesomeIcon icon={faPen} />
               </div>
-              <div class="list-item-icon" onClick={() => this.props.onDelete(this.props.data.id)}>
+              {/* <div class="list-item-icon" onClick={() => this.props.onDelete(this.props.data.id)}>
                 <FontAwesomeIcon icon={faTrash} />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -5,14 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 class EditMeasurementModal extends React.Component {
-  state = {
-    data: this.props.data
-  };
-
-  // i bet this is a dirty workaround
-  getData() {
-    return this.state.data ?? this.props.data;
-  }
 
   deleteMeasurement(measurement) {
     // little hack because i suck at react apparently
@@ -51,18 +43,18 @@ class EditMeasurementModal extends React.Component {
     return (
       <Modal show={this.props.show} onHide={() => this.props.onClose()}>
         <Modal.Header closeButton>
-          <Modal.Title>{this.getData()?.name}</Modal.Title>
+          <Modal.Title>{this.props.data?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div class="measurement-listing">
-            {this.getData()?.measurements.map(measurement => this.renderMeasurement(measurement))}
+            {this.propos.data?.measurements.map(measurement => this.renderMeasurement(measurement))}
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => this.onClose()}>
+          <Button variant="secondary">
             Close
           </Button>
-          <Button variant="primary" onClick={() => this.onSave()}>
+          <Button variant="primary">
             Save Changes
           </Button>
         </Modal.Footer>
