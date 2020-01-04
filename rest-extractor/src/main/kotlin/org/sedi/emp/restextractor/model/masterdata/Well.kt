@@ -24,7 +24,7 @@ class Well(
         val altitude: Double,
 
         @Column(name = "w_maxdepth")
-        val maxdepth: Double,
+        val maxDepth: Double,
 
         @Column(name = "w_diameter")
         val diameter: Double

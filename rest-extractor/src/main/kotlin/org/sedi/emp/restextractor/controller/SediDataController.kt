@@ -1,4 +1,4 @@
-package org.sedi.emp.restextractor
+package org.sedi.emp.restextractor.controller
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity

@@ -28,7 +28,7 @@ class MasterDataPersistenceTest {
                 latitude = "51° 28′ 38″ N",
                 longtitude = "0°",
                 altitude = 0.0,
-                maxdepth = 0.0,
+                maxDepth = 0.0,
                 diameter = 0.0
         )
 
