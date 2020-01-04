@@ -7,7 +7,7 @@ import {
 } from '../redux/actions'
 
 const mapStateToProps = state => ({
-  measurementPoints: state.measurementPoints.data
+  measurementPoints: state.measurementPoints
 })
 
 const mapDispatchToProps = dispatch => ({

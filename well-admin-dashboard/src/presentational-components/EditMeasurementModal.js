@@ -5,33 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 class EditMeasurementModal extends React.Component {
-  deleteMeasurement(measurement) {
-    // little hack because i suck at react apparently
-    const sData = { ...this.getData() };
-    const updatedMeasurements = sData.measurements.filter(m => m.name !== measurement.name);
-
-    sData.measurements = updatedMeasurements;
-
-    this.setState({
-      data: sData
-    });
-  }
-
-  onClose() {
-    this.setState({ data: null });
-    this.props.onClose();
-  }
 
   onSave() {
-    this.props.onSave(this.getData());
-    this.setState({ data: null });
+    this.props.onSave(this.props.data)
+    this.props.onClose()
   }
 
   renderMeasurement(measurement) {
     return (
       <div class="measurement-row">
         <p class="text">{measurement.name}</p>
-        <div class="icon" onClick={() => this.deleteMeasurement(measurement)}>
+        <div class="icon" onClick={() => this.props.onDeleteMeasurement(measurement)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
       </div>
@@ -48,8 +32,8 @@ class EditMeasurementModal extends React.Component {
           <div class="measurement-listing">{this.props.data?.measurements.map(measurement => this.renderMeasurement(measurement))}</div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Save Changes</Button>
+          <Button variant="secondary" onClick={() => this.props.onClose()}>Close</Button>
+          <Button variant="primary" onClick={() => this.onSave()}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
     );

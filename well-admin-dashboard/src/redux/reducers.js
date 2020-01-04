@@ -1,4 +1,4 @@
-import { SHOW_MODAL, HIDE_MODAL } from "./actions";
+import { SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT } from "./actions";
 import { combineReducers } from "redux";
 
 const initialData = [
@@ -14,8 +14,13 @@ const initialData = [
   }
 ];
 
-const measurementPoints = (state = { data: initialData }, action) => {
-  return state;
+const measurementPoints = (state = initialData, action) => {
+  switch (action.type) {
+    case SAVE_CHANGES:
+      return state.map(point => point.id === action.payload.id ? action.payload : point)
+    default:
+      return state
+  }
 };
 
 const modalVisibility = (state = { show: false, data: null }, action) => {
@@ -23,7 +28,22 @@ const modalVisibility = (state = { show: false, data: null }, action) => {
     case SHOW_MODAL:
       return Object.assign({}, state, {
         show: true,
-        data: action.payload
+        data: JSON.parse(JSON.stringify(action.payload))
+      });
+    case HIDE_MODAL:
+      return Object.assign({}, state, {
+        show: false,
+        data: null
+      });
+    case DELETE_MEASUREMENT:
+      var updatedMeasurements = state.data.measurements.filter(mp => mp.name !== action.payload.name)
+      console.log(action.payload)
+      return Object.assign({}, state, {
+        ...state,
+        data: {
+          ...state.data,
+          measurements: updatedMeasurements
+        }
       });
     default:
       return state;
@@ -31,6 +51,6 @@ const modalVisibility = (state = { show: false, data: null }, action) => {
 };
 
 export default combineReducers({
-  measurementPoints,
+  measurementPoints: measurementPoints,
   modal: modalVisibility
 });
