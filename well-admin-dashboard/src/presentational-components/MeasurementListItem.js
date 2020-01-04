@@ -20,29 +20,29 @@ class MeasurementListItem extends React.Component {
   render() {
     return (
       <>
-        <div class="measurement-item-background">
-          <div class="measurement-item-overview">
-            <div class="measurement-item-overview-left">
-              <div class="column">
-                <b class="text">{this.props.data.name}</b>
-                <p class="detail-text"> {this.props.data.id}</p>
+        <div className="measurement-item-background">
+          <div className="measurement-item-overview">
+            <div className="measurement-item-overview-left">
+              <div className="column">
+                <b className="text">{this.props.data.name}</b>
+                <p className="detail-text"> {this.props.data.id}</p>
               </div>
-              <div class="column margin-left">
-                <b class="measurements-text">Measurements</b>
-                <div class="measurements-listing-row-wrap">
+              <div className="column margin-left">
+                <b className="measurements-text">Measurements</b>
+                <div className="measurements-listing-row-wrap">
                   {this.props.data.measurements.map(item => (
-                    <div class="measurements-info">
-                      <div class="measurements-icon margin-left">
+                    <div className="measurements-info">
+                      <div className="measurements-icon margin-left">
                         <FontAwesomeIcon icon={this.iconForMeasurement(item.name)} />
                       </div>
-                      <p class="text">{item.name}</p>
+                      <p className="text">{item.name}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-            <div class="icon-div">
-              <div class="list-item-icon" onClick={() => this.props.onEdit()}>
+            <div className="icon-div">
+              <div className="list-item-icon" onClick={() => this.props.onEdit(this.props.data)}>
                 <FontAwesomeIcon icon={faPen} />
               </div>
               {/* <div class="list-item-icon" onClick={() => this.props.onDelete(this.props.data.id)}>

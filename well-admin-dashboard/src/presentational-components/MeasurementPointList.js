@@ -1,13 +1,13 @@
 import React from 'react'
 import MeasurementListItem from './MeasurementListItem'
 
-class MeasurementPointList extends React.Component{
+class MeasurementPointList extends React.Component {
 
-    render(){
-        return(
-            <ul class="list-group">
+    render() {
+        return (
+            <ul className="list-group">
                 {this.props.measurementPoints.map(mPoint => (
-                    <MeasurementListItem data={mPoint}/>
+                    <MeasurementListItem data={mPoint} onEdit={() => this.props.onItemEdit(mPoint)} />
                 ))}
             </ul>
         )

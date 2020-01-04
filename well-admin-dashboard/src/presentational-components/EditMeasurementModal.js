@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 class EditMeasurementModal extends React.Component {
-
   deleteMeasurement(measurement) {
     // little hack because i suck at react apparently
     const sData = { ...this.getData() };
@@ -46,17 +45,11 @@ class EditMeasurementModal extends React.Component {
           <Modal.Title>{this.props.data?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div class="measurement-listing">
-            {this.propos.data?.measurements.map(measurement => this.renderMeasurement(measurement))}
-          </div>
+          <div class="measurement-listing">{this.props.data?.measurements.map(measurement => this.renderMeasurement(measurement))}</div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary">
-            Close
-          </Button>
-          <Button variant="primary">
-            Save Changes
-          </Button>
+          <Button variant="secondary">Close</Button>
+          <Button variant="primary">Save Changes</Button>
         </Modal.Footer>
       </Modal>
     );

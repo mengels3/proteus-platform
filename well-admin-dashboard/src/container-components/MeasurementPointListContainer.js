@@ -1,12 +1,19 @@
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import MeasurementPointList from '../presentational-components/MeasurementPointList'
+import {
+  showModal
+} from '../redux/actions'
 
-const mapStateToProps = state => {
-    return {
-      measurementPoints: state.measurementPoints
-    }
-  }
+const mapStateToProps = state => ({
+  measurementPoints: state.measurementPoints.data
+})
 
-const MeasurementPointListCointainer = connect(mapStateToProps)(MeasurementPointList)
+const mapDispatchToProps = dispatch => ({
+  onItemEdit: item => dispatch(showModal(item))
+})
+
+const MeasurementPointListCointainer = connect(mapStateToProps, mapDispatchToProps)(MeasurementPointList)
 
 export default MeasurementPointListCointainer
