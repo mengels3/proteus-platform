@@ -6,8 +6,8 @@ CREATE TABLE SYSTEMPARAMETER(
 CREATE TABLE WELL(
 	w_id serial primary key,
 	w_name text not null,
-	w_lat float not null,
-	w_long float not null,
+	w_lat text not null,
+	w_long text not null,
 	w_altitude float,
 	w_maxdepth float,
 	w_diameter float
