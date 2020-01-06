@@ -27,7 +27,7 @@ class MeasurementListItem extends React.Component {
                 <b className="text">{this.props.data.name}</b>
                 <p className="detail-text"> {this.props.data.id}</p>
               </div>
-              <div className="column margin-left">
+              {/* <div className="column margin-left">
                 <b className="measurements-text">Measurements</b>
                 <div className="measurements-listing-row-wrap">
                   {this.props.data.measurements.map(item => (
@@ -39,7 +39,7 @@ class MeasurementListItem extends React.Component {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="icon-div">
               <div className="list-item-icon" onClick={() => this.props.onEdit(this.props.data)}>

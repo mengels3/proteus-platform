@@ -1,7 +1,13 @@
+import axios from 'axios'
+
 export const SHOW_MODAL = 'SHOW_MODAL'
 export const HIDE_MODAL = 'HIDE_MODAL'
 export const SAVE_CHANGES = 'SAVE_CHANGES'
 export const DELETE_MEASUREMENT = 'DELETE_MEASUREMENT'
+
+export const FETCH_MEASUREMENT_POINTS_START = 'FETCH_MEASUREMENT_POINTS_START'
+export const FETCH_MEASUREMENT_POINTS_SUCCESS = 'FETCH_MEASUREMENT_POINTS_SUCCESS'
+export const FETCH_MEASUREMENT_POINTS_ERROR = 'FETCH_MEASUREMENT_POINTS_ERROR'
 
 export const showModal = (measurementPoint) => ({
     type: SHOW_MODAL,
@@ -20,4 +26,18 @@ export const saveChanges = (measurementPoint) => ({
 export const deleteMeasurement = (measurement) => ({
     type: DELETE_MEASUREMENT,
     payload: measurement
+})
+
+export const fetchUsersStart = () => ({
+    type: FETCH_MEASUREMENT_POINTS_START
+})
+
+export const fetchUsersSuccess = (data) => ({
+    type: FETCH_MEASUREMENT_POINTS_SUCCESS,
+    payload: data
+})
+
+export const fetchUsersError = (err) => ({
+    type: FETCH_MEASUREMENT_POINTS_ERROR,
+    payload: err
 })
