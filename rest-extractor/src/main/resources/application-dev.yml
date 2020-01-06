@@ -1,6 +1,12 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:test;INIT=RUNSCRIPT FROM '../db/setup_db.sql';
+#    url: jdbc:h2:mem:test;INIT=RUNSCRIPT FROM '../db/setup_db.sql';
+#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;
+#    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE;
+    url: jdbc:h2:mem:;
     driverClassName: org.h2.Driver
     username: sa
     password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

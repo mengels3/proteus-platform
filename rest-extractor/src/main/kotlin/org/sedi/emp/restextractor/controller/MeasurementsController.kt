@@ -11,7 +11,7 @@ class MeasurementsController(private val measurementRepository: MeasurementRepos
 
     private val logger = LoggerFactory.getLogger(MeasurementsController::class.java)
 
-    @GetMapping("measurements")
+    @GetMapping("/measurement")
     fun getMeasurements(): List<Measurement> {
         val measurements: List<Measurement> = measurementRepository
                 .findAll()
