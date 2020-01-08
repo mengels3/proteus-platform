@@ -1,6 +1,6 @@
 .measurement-item-background{
     border: 2px solid transparent;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-top: 15px;
     margin-left: 15px;
     margin-right: 15px;
@@ -65,16 +65,26 @@
 }
 
 .margin-left{
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
-.measurements-listing-row{
+.measurements-listing-row-wrap{
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.measurements-info{
+    display: flex;
+    flex-direction: row;
 }
 
 .measurements-icon{
-    margin-left: 20px;
-    margin-right: 10px;
+    margin-right: 5px;
+}
+
+.list-item-icon:hover{
+    color:white;
+    cursor: pointer;
 }

@@ -1,4 +1,4 @@
-package org.sedi.emp.restextractor
+package org.sedi.emp.restextractor.controller
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -11,7 +11,7 @@ class SediDataController {
 
     private val log = LoggerFactory.getLogger(SediDataController::class.java)
 
-    @PostMapping("publish")
+    @PostMapping("/publish")
     fun sediData(@RequestBody data: String): ResponseEntity<String> {
         log.info(data);
         return ResponseEntity.ok("successfully processed")
