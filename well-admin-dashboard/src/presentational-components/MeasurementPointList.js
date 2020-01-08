@@ -5,7 +5,6 @@ class MeasurementPointList extends React.Component {
 
 
     componentDidMount() {
-        console.log("did mount")
         this.props.fetchMeasurementPoints();
     }
 

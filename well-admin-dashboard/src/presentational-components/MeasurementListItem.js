@@ -2,6 +2,7 @@ import React from "react";
 import "./MeasurementListItem.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faThermometerHalf, faTint, faWater } from "@fortawesome/free-solid-svg-icons";
+import { getDisplayNameForSensorTypeValue } from '../utils/utils'
 
 class MeasurementListItem extends React.Component {
   iconForMeasurement(name) {
@@ -17,6 +18,20 @@ class MeasurementListItem extends React.Component {
     }
   }
 
+  renderMeasurement(measurement) {
+    const name = getDisplayNameForSensorTypeValue(measurement.sensorTypeValue)
+    const icon = this.iconForMeasurement(name)
+
+    return (
+      <div className="measurements-info">
+        <div className="measurements-icon margin-left">
+          <FontAwesomeIcon icon={icon} />
+        </div>
+        <p className="text">{name}</p>
+      </div>
+    )
+  }
+
   render() {
     return (
       <>
@@ -27,27 +42,22 @@ class MeasurementListItem extends React.Component {
                 <b className="text">{this.props.data.name}</b>
                 <p className="detail-text"> {this.props.data.id}</p>
               </div>
-              {/* <div className="column margin-left">
+              <div className="column margin-left">
                 <b className="measurements-text">Measurements</b>
                 <div className="measurements-listing-row-wrap">
-                  {this.props.data.measurements.map(item => (
-                    <div className="measurements-info">
-                      <div className="measurements-icon margin-left">
-                        <FontAwesomeIcon icon={this.iconForMeasurement(item.name)} />
-                      </div>
-                      <p className="text">{item.name}</p>
-                    </div>
+                  {this.props.data.sensorTypes.map(item => (
+                    this.renderMeasurement(item)
                   ))}
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="icon-div">
               <div className="list-item-icon" onClick={() => this.props.onEdit(this.props.data)}>
                 <FontAwesomeIcon icon={faPen} />
               </div>
-              {/* <div class="list-item-icon" onClick={() => this.props.onDelete(this.props.data.id)}>
+              <div class="list-item-icon">
                 <FontAwesomeIcon icon={faTrash} />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

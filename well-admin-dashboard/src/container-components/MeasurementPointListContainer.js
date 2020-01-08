@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   onItemEdit: item => dispatch(showModal(item)),
   fetchMeasurementPoints: () => {
     dispatch(fetchUsersStart())
-    return axios.get('http://localhost:8081/wells')
+    return axios.get('http://localhost:8080/well')
       .then(res => dispatch(fetchUsersSuccess(res.data)))
       .catch(err => dispatch(fetchUsersError(err)))
   }

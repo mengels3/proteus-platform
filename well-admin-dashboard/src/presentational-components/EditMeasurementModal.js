@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import "./EditMeasurementModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { getDisplayNameForSensorTypeValue } from '../utils/utils'
 
 class EditMeasurementModal extends React.Component {
 
@@ -11,11 +12,11 @@ class EditMeasurementModal extends React.Component {
     this.props.onClose()
   }
 
-  renderMeasurement(measurement) {
+  renderMeasurement(sensorType) {
     return (
       <div class="measurement-row">
-        <p class="text">{measurement.name}</p>
-        <div class="icon" onClick={() => this.props.onDeleteMeasurement(measurement)}>
+        <p class="text">{getDisplayNameForSensorTypeValue(sensorType.sensorTypeValue)}</p>
+        <div class="icon" onClick={() => this.props.onDeleteMeasurement(sensorType)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
       </div>
@@ -23,13 +24,14 @@ class EditMeasurementModal extends React.Component {
   }
 
   render() {
+    console.log(this.props.data)
     return (
       <Modal show={this.props.show} onHide={() => this.props.onClose()}>
         <Modal.Header closeButton>
           <Modal.Title>{this.props.data?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div class="measurement-listing">{this.props.data?.measurements.map(measurement => this.renderMeasurement(measurement))}</div>
+          <div class="measurement-listing">{this.props.data?.sensorTypes.map(sensorType => this.renderMeasurement(sensorType))}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => this.props.onClose()}>Close</Button>

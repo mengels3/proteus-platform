@@ -6,6 +6,7 @@ import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -16,6 +17,7 @@ class WellController(private val wellRepository: WellRepository) {
     private val logger = LoggerFactory.getLogger(WellController::class.java)
 
     @GetMapping("/well")
+    @CrossOrigin(origins = ["http://localhost:3000"])
     fun getAllWells(): List<Well> {
         val wells = wellRepository
                 .findAll()

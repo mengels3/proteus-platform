@@ -23,7 +23,10 @@ const measurementPoints = (state = { data: [], fetching: false, error: null }, a
     case FETCH_MEASUREMENT_POINTS_ERROR:
       return { ...state, fetching: false, error: action.payload }
     case SAVE_CHANGES:
-      return state.map(point => point.id === action.payload.id ? action.payload : point)
+      return {
+        ...state,
+        data: state.data.map(point => point.id === action.payload.id ? action.payload : point)
+      }
     default: return state
   }
 }
@@ -41,13 +44,12 @@ const modalVisibility = (state = { show: false, data: null }, action) => {
         data: null
       });
     case DELETE_MEASUREMENT:
-      var updatedMeasurements = state.data.measurements.filter(mp => mp.name !== action.payload.name)
-      console.log(action.payload)
+      var updatedSensorTypes = state.data.sensorTypes.filter(mp => mp.sensorTypeValue !== action.payload.sensorTypeValue)
       return Object.assign({}, state, {
         ...state,
         data: {
           ...state.data,
-          measurements: updatedMeasurements
+          sensorTypes: updatedSensorTypes
         }
       });
     default:
