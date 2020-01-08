@@ -4,6 +4,7 @@ import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.masterdata.Well
 import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.sedi.emp.restextractor.persistence.WellRepository
+import java.math.BigDecimal
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -30,8 +31,9 @@ open class DatabaseInitializer(private val wellRepository: WellRepository) {
 
         val testWell1 = Well(
                 name = "New Well 01",
-                latitude = "51° 28′ 38″ N",
-                longtitude = "0°",
+                deviceId = "1234567",
+                latitude = BigDecimal(44.7777),
+                longtitude = BigDecimal(55.2223),
                 altitude = 0.0,
                 maxDepth = 0.0,
                 diameter = 0.0,
