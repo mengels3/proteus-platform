@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
 class WellController(private val wellRepository: WellRepository) {
 
     private val logger = LoggerFactory.getLogger(WellController::class.java)
 
     @GetMapping("/well")
-    @CrossOrigin(origins = ["http://localhost:3000"])
     fun getAllWells(): List<Well> {
         val wells = wellRepository
                 .findAll()
