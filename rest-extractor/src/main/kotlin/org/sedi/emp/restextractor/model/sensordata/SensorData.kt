@@ -1,10 +1,9 @@
 package org.sedi.emp.restextractor.model.sensordata
 
-/**
- * The sensor data send via the LoRa gateway.
- */
-data class SensorData (
+import org.sedi.emp.restextractor.model.masterdata.SensorType
+
+data class SensorData(
         val deviceId: String,
         val timestamp: String,
-        val dataPoints: List<Pair<String, String>>
+        val dataPoints: List<Pair<SensorType, String>>
 )

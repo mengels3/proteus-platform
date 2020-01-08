@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.time.Instant
+import java.time.format.DateTimeFormatter
+import javax.transaction.Transactional
 
 @RestController
 class MeasurementsController(
@@ -31,20 +34,28 @@ class MeasurementsController(
     }
 
     @PostMapping("/publish")
-    fun publishSediData(@RequestBody sensorData: SensorData): ResponseEntity<String> {
-        logger.debug("Received data $sensorData")
-        val maybeWell = wellRepository.findByDeviceId(sensorData.deviceId)
+//    @Transactional
+    fun publishSediData(@RequestBody rawSensorData: String): ResponseEntity<String> {
+        logger.debug("Received data $rawSensorData")
+        val sensorData: SensorData = computeSensorData(rawSensorData)
 
+        val maybeWell = wellRepository.findByDeviceId(sensorData.deviceId)
         return if (maybeWell.isPresent) {
             val well = maybeWell.get()
 
             val timestamp = sensorData.timestamp
-            sensorData.dataPoints
+            val measurements = sensorData.dataPoints
                     .map { toMeasurement(it, timestamp) }
-                    .forEach { well.measurements += it }
+                    .toList()
 
-            wellRepository.save(well)
-            ResponseEntity.ok("successfully processed")
+            logger.debug("Saving well: $well with measurements:")
+            measurements
+                    .forEach { logger.debug(" -> $it") }
+
+            measurements
+                    .forEach { well.measurements += it }
+//            wellRepository.save(well)
+            ResponseEntity.ok("true")
 
         } else {
             logger.info("Couldn't find well for deviceId $sensorData.deviceId!")
@@ -52,16 +63,50 @@ class MeasurementsController(
         }
     }
 
-    private fun toMeasurement(sensorDataPoint: Pair<String, String>, timestamp: String): Measurement {
-        val sensorType: SensorType = computeSensorType(sensorDataPoint.first)
+    private fun computeSensorData(rawSensorData: String): SensorData {
+        val DEVICE_ID = "device_id"
+        val keyValues = rawSensorData
+                .splitToSequence(";")
+                .map { computeKeyValue(it) }
+                .toList()
+
+        val deviceId = keyValues
+                .filter { it.first == DEVICE_ID }
+                .first()
+                .second
+
+        val dataPoints = keyValues
+                .filter { it.first != DEVICE_ID }
+                .map { Pair(computeSensorType(it.first), it.second) }
+                .toList()
+
+        val timestamp = DateTimeFormatter
+                .ISO_INSTANT
+                .format(Instant.now())
+
+        return SensorData(
+                deviceId = deviceId,
+                timestamp = timestamp,
+                dataPoints = dataPoints
+        )
+    }
+
+    private fun computeKeyValue(rawKeyValue: String): Pair<String, String> {
+        val splits = rawKeyValue
+                .splitToSequence("=")
+                .toList()
+        return Pair(splits[0], splits[1])
+    }
+
+    private fun toMeasurement(sensorDataPoint: Pair<SensorType, String>, timestamp: String): Measurement {
         return Measurement(
                 timestamp = timestamp,
                 value = sensorDataPoint.second,
-                sensorType = sensorType
+                sensorType = sensorDataPoint.first
         )
     }
 
     private fun computeSensorType(rawSensorType: String): SensorType {
-        TODO("not implemented")
+        return SensorType(sensorTypeValue = rawSensorType)
     }
 }

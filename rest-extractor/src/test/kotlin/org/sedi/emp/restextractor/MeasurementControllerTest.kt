@@ -33,4 +33,17 @@ class MeasurementControllerTest {
         assertThat(response.body, Is(not(nullValue())))
         assertThat(response.body!!.size, Is(2))
     }
+
+    @Test
+    fun testNewSensorDataPublishing() {
+        assertThat(restTemplate, Is(not(nullValue())))
+        val request = "device_id=10009;level=0.77;temp=18.50;ph=7.345"
+        val response: ResponseEntity<String> = restTemplate
+                .postForEntity("/publish", request, String::class.java)
+
+        assertThat(response, Is(not(nullValue())))
+        assertThat(response.statusCode, Is(HttpStatus.OK))
+        assertThat(response.body, Is(not(nullValue())))
+        assertThat(response.body, Is("true"))
+    }
 }
