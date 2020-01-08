@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 class WellController(private val wellRepository: WellRepository) {
@@ -28,7 +29,7 @@ class WellController(private val wellRepository: WellRepository) {
     }
 
     @GetMapping("/well/{id}/measurements")
-    fun getMeasurementsForWell(@PathVariable id: Long): ResponseEntity<List<Measurement>> {
+    fun getMeasurementsForWell(@PathVariable id: UUID): ResponseEntity<List<Measurement>> {
         logger.debug("Looking up well with ID $id")
         val maybeWell = wellRepository.findById(id)
         return if (maybeWell.isPresent) {

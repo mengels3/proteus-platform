@@ -3,6 +3,7 @@ package org.sedi.emp.restextractor.model.masterdata
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.sedi.emp.restextractor.model.sensordata.Measurement
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -10,9 +11,9 @@ import javax.persistence.*
 class Well(
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "w_id")
-        var id: Long = 0,
+        var id: UUID? = null,
 
         @Column(name = "w_name")
         val name: String,
@@ -32,7 +33,7 @@ class Well(
         @Column(name = "w_diameter")
         val diameter: Double,
 
-        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         val sensorTypes: MutableList<SensorType>,
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)

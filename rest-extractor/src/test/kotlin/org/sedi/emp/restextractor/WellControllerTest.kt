@@ -23,11 +23,27 @@ class WellControllerTest {
     @Autowired
     private lateinit var restTemplate: TestRestTemplate
 
-    @Autowired
-    private lateinit var databaseInitializer: DatabaseInitializer
-
     @Test
     fun testWellsRetrieval() {
+        val wells = fetchWells()
+        assertThat(wells, Is(not(nullValue())))
+    }
+
+    @Test
+    fun testMeasurementRetrievalForWell() {
+        val wellId = fetchWells()[0].id
+
+        assertThat(restTemplate, Is(not(nullValue())))
+        val response: ResponseEntity<Array<Measurement>> = restTemplate
+                .getForEntity("/well/{wellId}/measurements", Array<Measurement>::class.java, wellId)
+
+        assertThat(response, Is(not(nullValue())))
+        assertThat(response.statusCode, Is(HttpStatus.OK))
+        assertThat(response.body, Is(not(nullValue())))
+        assertThat(response.body!!.size, Is(2))
+    }
+
+    private fun fetchWells(): List<Well> {
         assertThat(restTemplate, Is(not(nullValue())))
         val response: ResponseEntity<Array<Well>> = restTemplate
                 .getForEntity("/well", Array<Well>::class.java)
@@ -36,17 +52,9 @@ class WellControllerTest {
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
         assertThat(response.body!!.size, Is(1))
-    }
 
-    @Test
-    fun testMeasurementRetrievalForWell() {
-        assertThat(restTemplate, Is(not(nullValue())))
-        val response: ResponseEntity<Array<Measurement>> = restTemplate
-                .getForEntity("/well/1/measurements", Array<Measurement>::class.java)
-
-        assertThat(response, Is(not(nullValue())))
-        assertThat(response.statusCode, Is(HttpStatus.OK))
-        assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body!!.size, Is(2))
+        return response
+                .body
+                ?.toList()!!
     }
 }

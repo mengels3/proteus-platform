@@ -4,7 +4,7 @@ import org.sedi.emp.restextractor.model.masterdata.Well
 import org.springframework.data.repository.CrudRepository
 import java.util.*
 
-interface WellRepository : CrudRepository<Well, Long> {
+interface WellRepository : CrudRepository<Well, UUID> {
 
-    override fun findById(id: Long): Optional<Well>
+    override fun findById(id: UUID): Optional<Well>
 }

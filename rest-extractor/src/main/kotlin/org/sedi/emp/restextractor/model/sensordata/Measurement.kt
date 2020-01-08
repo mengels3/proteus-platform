@@ -1,6 +1,7 @@
 package org.sedi.emp.restextractor.model.sensordata
 
 import org.sedi.emp.restextractor.model.masterdata.SensorType
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -8,9 +9,9 @@ import javax.persistence.*
 class Measurement(
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "m_id")
-        var id: Long = 0,
+        var id: UUID? = null,
 
         @Column(name = "m_timestamp")
         val timestamp: String,
