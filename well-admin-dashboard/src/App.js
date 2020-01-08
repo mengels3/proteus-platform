@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import MeasurementPointListContainer from './container-components/MeasurementPointListContainer'
 import EditMeasurementModalContainer from "./container-components/EditMeasurementModalContainer";
+import AddMeasurementPointButton from './presentational-components/AddMeasurementPointButton'
+import AddMeasurementPointModal from './presentational-components/AddMeasurementPointModal'
 
 class App extends React.Component {
 
@@ -9,7 +11,9 @@ class App extends React.Component {
     return (
       <>
         <MeasurementPointListContainer />
+        <AddMeasurementPointButton />
         <EditMeasurementModalContainer />
+        <AddMeasurementPointModal />
       </>
     );
   }
