@@ -1,4 +1,4 @@
-import { SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
+import { CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
 import { combineReducers } from "redux";
 
 // const initialData = [
@@ -57,12 +57,14 @@ const modalVisibility = (state = { show: false, data: null }, action) => {
   }
 };
 
-const createModal = (state = { show: false, data: null }, action) => {
+const createModal = (state = { show: false, data: null, validated: false }, action) => {
   switch (action.type) {
     case SHOW_CREATE_MODAL:
       return { ...state, show: true }
     case HIDE_CREATE_MODAL:
       return { ...state, show: false }
+    case CREATE_MODAL_IS_VALID:
+      return {...state, validated: true}  
     default: return state
   }
 }

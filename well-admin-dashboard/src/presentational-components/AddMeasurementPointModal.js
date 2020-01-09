@@ -1,13 +1,28 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, InputGroup, Dropdown } from "react-bootstrap"
 import { useSelector, useDispatch } from 'react-redux'
-import { Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
+import { Formik, FieldArray } from 'formik';
+import * as yup from 'yup'
+import Select from 'react-select';
 
+const schema = yup.object({
+    name: yup.string().min(4, 'Please select name a name longer than 4 characters').max(30, 'Please select name a name no longer than 30 characters').required('Please provide a name.'),
+    depth: yup.number().required('Please provide the well depth.'),
+    diameter: yup.number().required('Please provide the well diameter.'),
+    measurements: yup.array().min(1, 'At least one measurement is required.')
+  });
 
 const AddMeasurementPointModal = () => {
 
     const dispatch = useDispatch()
     const show = useSelector(state => state.createModal.show)
+
+    const onSubmit = event => {
+        console.log(event)
+    }
+
+    const sensorTypes = [{value:"PH", label:"PH"}, {value:"TEMPERATURE", label:"TEMPERATURE"}]
 
     return (
         <Modal show={show} onHide={() => dispatch({ type: 'HIDE_CREATE_MODAL' })}>
@@ -15,23 +30,59 @@ const AddMeasurementPointModal = () => {
                 <Modal.Title>Create a new well</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter name" />
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
-                    </Form.Group>
-                    <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
+                <Formik validationSchema={schema} onSubmit={(event) => onSubmit(event)} initialValues={{name:'', depth:undefined, diameter:undefined, measurements:[]}}>
+                    {({
+                        handleSubmit,
+                        handleChange,
+                        values,
+                        touched,
+                        errors,
+                        handleBlur
+                    }) => (
+                        <Form noValidate onSubmit={handleSubmit}>
+                            <Form.Group controlId="formBasicName">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.name && !!errors.name} placeholder="Enter name" />
+                                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="formBasicDepth">
+                                    <Form.Label>Depth</Form.Label>
+                                    <InputGroup>
+                                        <Form.Control type="number" name="depth" value={values.depth} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.depth && !!errors.depth} placeholder="Enter depth" />
+                                        <InputGroup.Append>
+                                            <InputGroup.Text>meters</InputGroup.Text>
+                                        </InputGroup.Append>
+                                        <Form.Control.Feedback type="invalid">{errors.depth}</Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="formBasicDiameter">
+                                    <Form.Label>Diameter</Form.Label>
+                                    <InputGroup>
+                                        <Form.Control type="number" name="diameter" onBlur={handleBlur} value={values.diameter} onChange={handleChange} isInvalid={touched.diameter && !!errors.diameter} placeholder="Enter diameter" />
+                                        <InputGroup.Append>
+                                            <InputGroup.Text>meters</InputGroup.Text>
+                                        </InputGroup.Append>
+                                        <Form.Control.Feedback type="invalid">{errors.diameter}</Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Group>
+                                <Form.Label>Measurements</Form.Label>
+                                <Select
+                                    defaultValue={[]}
+                                    isMulti
+                                    name="sensorTypes"
+                                    options={sensorTypes}
+                                />
+                            </Form.Group>
+                            <Modal.Footer>
+                                <Button variant="secondary">Close</Button>
+                                <Button variant="primary" type="submit">Create</Button>
+                            </Modal.Footer>
+                        </Form>
+                    )}       
+                </Formik>
             </Modal.Body>
         </Modal>
     )

@@ -11,6 +11,11 @@ export const FETCH_MEASUREMENT_POINTS_ERROR = 'FETCH_MEASUREMENT_POINTS_ERROR'
 
 export const SHOW_CREATE_MODAL = 'SHOW_CREATE_MODAL'
 export const HIDE_CREATE_MODAL = 'HIDE_CREATE_MODAL'
+export const CREATE_MODAL_IS_VALID = 'CREATE_MODAL_IS_VALID'
+
+export const markCreateModalAsValid = () => ({
+    type: CREATE_MODAL_IS_VALID
+})
 
 export const showCreateModal = () => ({
     type: SHOW_CREATE_MODAL,
