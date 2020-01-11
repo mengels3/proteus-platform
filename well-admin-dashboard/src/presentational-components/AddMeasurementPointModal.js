@@ -11,18 +11,20 @@ const schema = yup.object({
     depth: yup.number().required('Please provide the well depth.'),
     diameter: yup.number().required('Please provide the well diameter.'),
     measurements: yup.array().min(1, 'At least one measurement is required.')
-  });
+});
 
 const AddMeasurementPointModal = () => {
 
     const dispatch = useDispatch()
     const show = useSelector(state => state.createModal.show)
 
-    const onSubmit = event => {
-        console.log(event)
+    const onSubmit = data => {
+        console.log("submit")
+        console.log(data)
+
     }
 
-    const sensorTypes = [{value:"PH", label:"PH"}, {value:"TEMPERATURE", label:"TEMPERATURE"}]
+    const sensorTypes = [{ value: "PH", label: "PH" }, { value: "TEMPERATURE", label: "TEMPERATURE" }]
 
     return (
         <Modal show={show} onHide={() => dispatch({ type: 'HIDE_CREATE_MODAL' })}>
@@ -30,58 +32,60 @@ const AddMeasurementPointModal = () => {
                 <Modal.Title>Create a new well</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Formik validationSchema={schema} onSubmit={(event) => onSubmit(event)} initialValues={{name:'', depth:undefined, diameter:undefined, measurements:[]}}>
+                <Formik validationSchema={schema} onSubmit={(data) => onSubmit(data)} initialValues={{ name: '', depth: undefined, diameter: undefined, measurements: [] }}>
                     {({
                         handleSubmit,
                         handleChange,
                         values,
                         touched,
                         errors,
-                        handleBlur
+                        handleBlur,
+                        setFieldValue
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Group controlId="formBasicName">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.name && !!errors.name} placeholder="Enter name" />
-                                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
-                            </Form.Group>
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formBasicDepth">
-                                    <Form.Label>Depth</Form.Label>
-                                    <InputGroup>
-                                        <Form.Control type="number" name="depth" value={values.depth} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.depth && !!errors.depth} placeholder="Enter depth" />
-                                        <InputGroup.Append>
-                                            <InputGroup.Text>meters</InputGroup.Text>
-                                        </InputGroup.Append>
-                                        <Form.Control.Feedback type="invalid">{errors.depth}</Form.Control.Feedback>
-                                    </InputGroup>
+                            <Form noValidate onSubmit={handleSubmit}>
+                                <Form.Group controlId="formBasicName">
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.name && !!errors.name} placeholder="Enter name" />
+                                    <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group as={Col} controlId="formBasicDiameter">
-                                    <Form.Label>Diameter</Form.Label>
-                                    <InputGroup>
-                                        <Form.Control type="number" name="diameter" onBlur={handleBlur} value={values.diameter} onChange={handleChange} isInvalid={touched.diameter && !!errors.diameter} placeholder="Enter diameter" />
-                                        <InputGroup.Append>
-                                            <InputGroup.Text>meters</InputGroup.Text>
-                                        </InputGroup.Append>
-                                        <Form.Control.Feedback type="invalid">{errors.diameter}</Form.Control.Feedback>
-                                    </InputGroup>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formBasicDepth">
+                                        <Form.Label>Depth</Form.Label>
+                                        <InputGroup>
+                                            <Form.Control type="number" name="depth" value={values.depth} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.depth && !!errors.depth} placeholder="Enter depth" />
+                                            <InputGroup.Append>
+                                                <InputGroup.Text>meters</InputGroup.Text>
+                                            </InputGroup.Append>
+                                            <Form.Control.Feedback type="invalid">{errors.depth}</Form.Control.Feedback>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} controlId="formBasicDiameter">
+                                        <Form.Label>Diameter</Form.Label>
+                                        <InputGroup>
+                                            <Form.Control type="number" name="diameter" onBlur={handleBlur} value={values.diameter} onChange={handleChange} isInvalid={touched.diameter && !!errors.diameter} placeholder="Enter diameter" />
+                                            <InputGroup.Append>
+                                                <InputGroup.Text>meters</InputGroup.Text>
+                                            </InputGroup.Append>
+                                            <Form.Control.Feedback type="invalid">{errors.diameter}</Form.Control.Feedback>
+                                        </InputGroup>
+                                    </Form.Group>
+                                </Form.Row>
+                                <Form.Group>
+                                    <Form.Label>Measurements</Form.Label>
+                                    <Select
+                                        defaultValue={[]}
+                                        isMulti
+                                        name="measurements"
+                                        options={sensorTypes}
+                                        onChange={(measurements) => setFieldValue('measurements', measurements)}
+                                        onBlur={handleBlur}
+                                        value={values.measurements}
+                                    />
                                 </Form.Group>
-                            </Form.Row>
-                            <Form.Group>
-                                <Form.Label>Measurements</Form.Label>
-                                <Select
-                                    defaultValue={[]}
-                                    isMulti
-                                    name="sensorTypes"
-                                    options={sensorTypes}
-                                />
-                            </Form.Group>
-                            <Modal.Footer>
-                                <Button variant="secondary">Close</Button>
-                                <Button variant="primary" type="submit">Create</Button>
-                            </Modal.Footer>
-                        </Form>
-                    )}       
+                                <button type="submit">Submit</button>
+                                <p>{JSON.stringify(values)}</p>
+                            </Form>
+                        )}
                 </Formik>
             </Modal.Body>
         </Modal>
