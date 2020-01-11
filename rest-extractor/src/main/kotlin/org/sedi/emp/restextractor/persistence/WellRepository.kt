@@ -7,4 +7,6 @@ import java.util.*
 interface WellRepository : CrudRepository<Well, UUID> {
 
     override fun findById(id: UUID): Optional<Well>
+
+    fun findByDeviceId(deviceId: String): Optional<Well>
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
+import java.math.BigDecimal
 import org.hamcrest.Matchers.`is` as Is
 
 @SpringBootTest
@@ -29,8 +30,9 @@ class MasterDataPersistenceTest {
 
         val testWell1 = Well(
                 name = "New Well 01",
-                latitude = "51° 28′ 38″ N",
-                longtitude = "0°",
+                deviceId = "456456456",
+                latitude = BigDecimal(33.2222),
+                longtitude = BigDecimal(22.5689),
                 altitude = 0.0,
                 maxDepth = 0.0,
                 diameter = 0.0,
