@@ -8,13 +8,13 @@ import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.time.Instant
 import java.time.format.DateTimeFormatter
-import javax.transaction.Transactional
 
 @RestController
 class MeasurementsController(
@@ -35,8 +35,9 @@ class MeasurementsController(
 
     @PostMapping("/publish")
 //    @Transactional
-    fun publishSediData(@RequestBody rawSensorData: String): ResponseEntity<String> {
-        logger.debug("Received data $rawSensorData")
+    fun publishData(@RequestBody body: MultiValueMap<String, String>): ResponseEntity<String> {
+        val rawSensorData: String = body["data"]!!.first()
+        logger.debug("Received data: $rawSensorData")
         val sensorData: SensorData = computeSensorData(rawSensorData)
 
         val maybeWell = wellRepository.findByDeviceId(sensorData.deviceId)
@@ -48,7 +49,7 @@ class MeasurementsController(
                     .map { toMeasurement(it, timestamp) }
                     .toList()
 
-            logger.debug("Saving well: $well with measurements:")
+            logger.debug("Saving well $well with measurements:")
             measurements
                     .forEach { logger.debug(" -> $it") }
 
