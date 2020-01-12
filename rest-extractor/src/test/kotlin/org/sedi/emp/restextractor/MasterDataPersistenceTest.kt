@@ -3,7 +3,6 @@ package org.sedi.emp.restextractor
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.sedi.emp.restextractor.model.masterdata.Well
 import org.sedi.emp.restextractor.persistence.WellRepository
@@ -23,10 +22,9 @@ class MasterDataPersistenceTest {
     private lateinit var wellRepository: WellRepository
 
     @Test
-    @Disabled
     fun testWellMasterDataPersistence() {
         assertThat(wellRepository, Is(not(nullValue())))
-        assertThat(wellRepository.count(), Is(0L))
+        assertThat(wellRepository.count(), Is(1L))
 
         val testWell1 = Well(
                 name = "New Well 01",
@@ -41,6 +39,6 @@ class MasterDataPersistenceTest {
         )
 
         wellRepository.save(testWell1)
-        assertThat(wellRepository.count(), Is(1L))
+        assertThat(wellRepository.count(), Is(2L))
     }
 }

@@ -51,11 +51,6 @@ class MeasurementService(
                     .asSequence()
                     .map { saveMeasurement(it, well.id!!) }
                     .toList()
-
-//            measurements
-//                    .forEach { well.measurements += it }
-//            wellRepository.save(well)
-
             Optional.of(savedMeasurements)
 
         } else {
