@@ -20,5 +20,8 @@ data class Measurement(
         val value: String, // an arbitrary value
 
         @ManyToOne
-        val sensorType: SensorType
+        val sensorType: SensorType,
+
+        @Column(name = "m_fk_wellid")
+        val wellId: UUID? = null
 )

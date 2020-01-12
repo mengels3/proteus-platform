@@ -3,12 +3,15 @@ package org.sedi.emp.restextractor
 import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.masterdata.Well
 import org.sedi.emp.restextractor.model.sensordata.Measurement
+import org.sedi.emp.restextractor.persistence.MeasurementRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-open class DatabaseInitializer(private val wellRepository: WellRepository) {
+open class DatabaseInitializer(
+        private val wellRepository: WellRepository,
+        private val measurementRepository: MeasurementRepository) {
 
     fun initializeTestData() {
         val ts = DateTimeFormatter
@@ -19,17 +22,6 @@ open class DatabaseInitializer(private val wellRepository: WellRepository) {
         val temp = SensorType(sensorTypeValue = "temp")
         val level = SensorType(sensorTypeValue = "level")
 
-        val testMeasurement1 = Measurement(
-                timestamp = ts,
-                value = "3.3",
-                sensorType = ph
-        )
-        val testMeasurement2 = Measurement(
-                timestamp = ts,
-                value = "77.0",
-                sensorType = temp
-        )
-
         val testWell1 = Well(
                 name = "New Well 01",
                 deviceId = "10009",
@@ -39,11 +31,24 @@ open class DatabaseInitializer(private val wellRepository: WellRepository) {
                 maxDepth = 0.0,
                 diameter = 0.0,
                 sensorTypes = mutableListOf(ph, temp, level),
-                measurements = mutableListOf(
-                        testMeasurement1,
-                        testMeasurement2
-                )
+                measurements = mutableListOf()
         )
-        wellRepository.save(testWell1)
+        val savedWell = wellRepository.save(testWell1)
+
+
+        val testMeasurement1 = Measurement(
+                timestamp = ts,
+                value = "3.3",
+                sensorType = ph,
+                wellId = savedWell.id
+        )
+        val testMeasurement2 = Measurement(
+                timestamp = ts,
+                value = "77.0",
+                sensorType = temp,
+                wellId = savedWell.id
+        )
+        measurementRepository.save(testMeasurement1)
+        measurementRepository.save(testMeasurement2)
     }
 }

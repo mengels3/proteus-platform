@@ -49,7 +49,7 @@ class MeasurementService(
 
             val savedMeasurements = measurements
                     .asSequence()
-                    .map { saveMeasurement(it) }
+                    .map { saveMeasurement(it, well.id!!) }
                     .toList()
 
 //            measurements
@@ -64,10 +64,12 @@ class MeasurementService(
         }
     }
 
-    private fun saveMeasurement(m: Measurement): Measurement {
+    private fun saveMeasurement(m: Measurement, wellId: UUID): Measurement {
         val savedSensorType = sensorTypeRepository.save(m.sensorType)
-        val m2 = m.copy(sensorType = savedSensorType)
-        // TODO: set the wellId!
+        val m2 = m.copy(
+                sensorType = savedSensorType,
+                wellId = wellId
+        )
         return measurementRepository.save(m2)
     }
 
