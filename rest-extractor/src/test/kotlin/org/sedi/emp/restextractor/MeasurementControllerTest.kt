@@ -1,8 +1,7 @@
 package org.sedi.emp.restextractor
 
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.not
-import org.hamcrest.Matchers.nullValue
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,7 +29,7 @@ class MeasurementControllerTest {
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body!!.size, Is(2))
+        assertThat(response.body!!.size, Is(greaterThan(0)))
     }
 
     @Test
@@ -41,13 +40,13 @@ class MeasurementControllerTest {
         val request: HttpEntity<String> = HttpEntity(requestBody, httpHeaders)
 
         assertThat(restTemplate, Is(not(nullValue())))
-        val response: ResponseEntity<String> = restTemplate
-                .postForEntity("/publish", request, String::class.java)
+        val response: ResponseEntity<Array<Measurement>> = restTemplate
+                .postForEntity("/publish", request, Array<Measurement>::class.java)
 
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body, Is("true"))
+        assertThat(response.body!!.size, Is(3))
     }
 
     @Test
@@ -58,13 +57,13 @@ class MeasurementControllerTest {
         val request: HttpEntity<String> = HttpEntity(urlEncodedBody, httpHeaders)
 
         assertThat(restTemplate, Is(not(nullValue())))
-        val response: ResponseEntity<String> = restTemplate
-                .postForEntity("/publish", request, String::class.java)
+        val response: ResponseEntity<Array<Measurement>> = restTemplate
+                .postForEntity("/publish", request, Array<Measurement>::class.java)
 
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body, Is("true"))
+        assertThat(response.body!!.size, Is(5))
     }
 
     @Test

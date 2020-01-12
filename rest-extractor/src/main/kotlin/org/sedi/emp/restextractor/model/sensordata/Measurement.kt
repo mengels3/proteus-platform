@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "MEASUREMENT")
-class Measurement(
+data class Measurement(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
