@@ -1,6 +1,6 @@
 #include <SoftwareSerial.h>
-#define rx 2
-#define tx 3
+#define rx 5
+#define tx 6
 #include <OneWire.h>
 #include<DallasTemperature.h>
 #define ONE_WIRE_BUS 4
@@ -35,7 +35,7 @@ void setup() {
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly
   
   if (myserial.available() > 0) {                     //if we see that the Atlas Scientific product has sent a character
     char inchar = (char)myserial.read();              //get the char we just received
@@ -46,17 +46,16 @@ void loop() {
   }
 
   if (sensor_string_complete == true) {
-    Serial.println(sensorstring);
-    ph_value = "";
+    Serial.println(ph_value);
     sensor_string_complete = false;
     
     sensors.requestTemperatures(); 
     temp = sensors.getTempCByIndex(0);
     Serial.println(temp);
 
-    Raw_value = analogRead(A0);
+    raw_value = analogRead(A0);
     voltage = (raw_value * 5.0) / 1023.0;
-    iamp = (voltage * 1000) / Shunt_Res;
+    iamp = (voltage * 1000) / shunt_Res;
     depth = (iamp-4) / 3.2;
     Serial.println(depth);
     Serial.println();
@@ -64,15 +63,20 @@ void loop() {
     LoRa.beginPacket();
     LoRa.print("<");
     LoRa.print(device_id);
-    LoRa.print(">level=");
+    LoRa.print(">device_id=");
+    LoRa.print(device_id);
+    LoRa.print(";level=");
     LoRa.print(depth);
-    LoRa.print("&temp=");
+    LoRa.print(";temp=");
     LoRa.print(temp); 
-    LoRa.print("&ph=");
-    LoRa.print(ph_value); 
+    LoRa.print(";ph=");
+    LoRa.print(ph_value);
    // LoRa.print(counter);
     LoRa.endPacket();
-    
+    Serial.println("Sent Lora Msg");
+    Serial.println();
+
+    ph_value = "";
     delay(5000);
   }
 
