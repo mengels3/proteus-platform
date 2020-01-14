@@ -34,8 +34,7 @@ class MasterDataPersistenceTest {
                 altitude = 0.0,
                 maxDepth = 0.0,
                 diameter = 0.0,
-                sensorTypes = mutableListOf(),
-                measurements = mutableListOf()
+                sensorTypes = mutableListOf()
         )
 
         wellRepository.save(testWell1)

@@ -7,17 +7,12 @@ import org.sedi.emp.restextractor.persistence.MeasurementRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
 import java.math.BigDecimal
 import java.time.Instant
-import java.time.format.DateTimeFormatter
 
 open class DatabaseInitializer(
         private val wellRepository: WellRepository,
         private val measurementRepository: MeasurementRepository) {
 
     fun initializeTestData() {
-        val ts = DateTimeFormatter
-                .ISO_INSTANT
-                .format(Instant.now())
-
         val ph = SensorType(sensorTypeValue = "ph")
         val temp = SensorType(sensorTypeValue = "temp")
         val level = SensorType(sensorTypeValue = "level")
@@ -30,20 +25,19 @@ open class DatabaseInitializer(
                 altitude = 0.0,
                 maxDepth = 0.0,
                 diameter = 0.0,
-                sensorTypes = mutableListOf(ph, temp, level),
-                measurements = mutableListOf()
+                sensorTypes = mutableListOf(ph, temp, level)
         )
         val savedWell = wellRepository.save(testWell1)
 
-
+        val now = Instant.now()
         val testMeasurement1 = Measurement(
-                timestamp = ts,
+                timestamp = now,
                 value = "3.3",
                 sensorType = ph,
                 wellId = savedWell.id
         )
         val testMeasurement2 = Measurement(
-                timestamp = ts,
+                timestamp = now,
                 value = "77.0",
                 sensorType = temp,
                 wellId = savedWell.id

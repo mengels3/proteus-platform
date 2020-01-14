@@ -39,8 +39,7 @@ class WellService(
                 altitude = altitude,
                 maxDepth = maxDepth,
                 diameter = diameter,
-                sensorTypes = sensorTypes.toMutableList(),
-                measurements = mutableListOf()
+                sensorTypes = sensorTypes.toMutableList()
         )
 
         // save it:

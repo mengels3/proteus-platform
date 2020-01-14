@@ -1,8 +1,5 @@
 package org.sedi.emp.restextractor.model.masterdata
 
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
-import org.sedi.emp.restextractor.model.sensordata.Measurement
 import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
@@ -37,10 +34,6 @@ class Well(
         @Column(name = "w_diameter")
         val diameter: Double,
 
-        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val sensorTypes: MutableList<SensorType>,
-
-        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        @Fetch(value = FetchMode.SUBSELECT)
-        val measurements: MutableList<Measurement>
+        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        val sensorTypes: MutableList<SensorType>
 )

@@ -9,7 +9,6 @@ import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.transaction.Transactional
 
@@ -85,13 +84,9 @@ class MeasurementService(
                 .map { Pair(computeSensorType(it.first), it.second) }
                 .toList()
 
-        val timestamp = DateTimeFormatter
-                .ISO_INSTANT
-                .format(Instant.now())
-
         return SensorData(
                 deviceId = deviceId,
-                timestamp = timestamp,
+                timestamp = Instant.now(),
                 dataPoints = dataPoints
         )
     }
@@ -103,7 +98,7 @@ class MeasurementService(
         return Pair(splits[0], splits[1])
     }
 
-    private fun toMeasurement(sensorDataPoint: Pair<SensorType, String>, timestamp: String): Measurement {
+    private fun toMeasurement(sensorDataPoint: Pair<SensorType, String>, timestamp: Instant): Measurement {
         return Measurement(
                 timestamp = timestamp,
                 value = sensorDataPoint.second,

@@ -1,6 +1,7 @@
 package org.sedi.emp.restextractor.model.sensordata
 
 import org.sedi.emp.restextractor.model.masterdata.SensorType
+import java.time.Instant
 import java.util.*
 import javax.persistence.*
 
@@ -14,7 +15,7 @@ data class Measurement(
         var id: UUID? = null,
 
         @Column(name = "m_timestamp")
-        val timestamp: String,
+        val timestamp: Instant,
 
         @Column(name = "m_value")
         val value: String, // an arbitrary value
