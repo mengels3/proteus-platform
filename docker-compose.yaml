@@ -3,7 +3,7 @@ version: '2'
 services:
   dashboard:
     image: sedichile/dashboard
-    depends_on: 
+    depends_on:
       - db
     ports:
       - "3000:3000"
@@ -17,3 +17,12 @@ services:
       - "5432:5432"
     container_name: sedi-postgres
     restart: always
+  platformapp:
+    image: sedichile/platformapp
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    container_name: sedi-platformapp
+    restart: always
+
