@@ -15,7 +15,7 @@ class EditMeasurementModal extends React.Component {
   renderMeasurement(sensorType) {
     return (
       <div class="measurement-row">
-        <p class="text">{getDisplayNameForSensorTypeValue(sensorType.sensorTypeValue)}</p>
+        <p class="black-text">{getDisplayNameForSensorTypeValue(sensorType.sensorTypeValue)}</p>
         <div class="icon" onClick={() => this.props.onDeleteMeasurement(sensorType)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
@@ -24,7 +24,6 @@ class EditMeasurementModal extends React.Component {
   }
 
   render() {
-    console.log(this.props.data)
     return (
       <Modal show={this.props.show} onHide={() => this.props.onClose()}>
         <Modal.Header closeButton>

@@ -13,6 +13,10 @@ export const SHOW_CREATE_MODAL = 'SHOW_CREATE_MODAL'
 export const HIDE_CREATE_MODAL = 'HIDE_CREATE_MODAL'
 export const CREATE_MODAL_IS_VALID = 'CREATE_MODAL_IS_VALID'
 
+export const FETCH_SENSOR_TYPES_START = 'FETCH_SENSOR_TYPES_START'
+export const FETCH_SENSOR_TYPES_SUCCESS = 'FETCH_SENSOR_TYPES_SUCCESS'
+export const FETCH_SENSOR_TYPES_ERROR = 'FETCH_SENSOR_TYPES_ERROR'
+
 export const markCreateModalAsValid = () => ({
     type: CREATE_MODAL_IS_VALID
 })
@@ -42,6 +46,20 @@ export const saveChanges = (measurementPoint) => ({
 export const deleteMeasurement = (measurement) => ({
     type: DELETE_MEASUREMENT,
     payload: measurement
+})
+
+export const fetchSensorTypesStart = () => ({
+    type: FETCH_SENSOR_TYPES_START
+})
+
+export const fetchSensorTypesSuccess = (data) => ({
+    type: FETCH_SENSOR_TYPES_SUCCESS,
+    payload: data
+})
+
+export const fetchSensorTypesError = (error) => ({
+    type: FETCH_SENSOR_TYPES_ERROR,
+    payload: error
 })
 
 export const fetchUsersStart = () => ({

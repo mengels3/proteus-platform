@@ -1,4 +1,4 @@
-import { CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
+import { FETCH_SENSOR_TYPES_START, FETCH_SENSOR_TYPES_SUCCESS, FETCH_SENSOR_TYPES_ERROR, CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
 import { combineReducers } from "redux";
 
 // const initialData = [
@@ -27,6 +27,18 @@ const measurementPoints = (state = { data: [], fetching: false, error: null }, a
         ...state,
         data: state.data.map(point => point.id === action.payload.id ? action.payload : point)
       }
+    default: return state
+  }
+}
+
+const sensorTypes = (state = { data: [], fetching: false, error: null }, action) => {
+  switch (action.type) {
+    case FETCH_SENSOR_TYPES_START:
+      return { ...state, fetching: true }
+    case FETCH_SENSOR_TYPES_SUCCESS:
+      return { ...state, fetching: false, data: action.payload }
+    case FETCH_SENSOR_TYPES_ERROR:
+      return { ...state, fetching: false, error: action.payload }
     default: return state
   }
 }
@@ -64,7 +76,7 @@ const createModal = (state = { show: false, data: null, validated: false }, acti
     case HIDE_CREATE_MODAL:
       return { ...state, show: false }
     case CREATE_MODAL_IS_VALID:
-      return {...state, validated: true}  
+      return { ...state, validated: true }
     default: return state
   }
 }
@@ -73,4 +85,5 @@ export default combineReducers({
   measurementPoints: measurementPoints,
   modal: modalVisibility,
   createModal: createModal,
+  sensorTypes: sensorTypes
 });

@@ -1,10 +1,14 @@
-import React from "react";
-import { Modal, Button, InputGroup, Dropdown } from "react-bootstrap"
+import React, { useEffect } from "react";
+import { Modal, InputGroup } from "react-bootstrap"
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Col } from 'react-bootstrap'
-import { Formik, FieldArray } from 'formik';
+import { Formik } from 'formik'
 import * as yup from 'yup'
-import Select from 'react-select';
+import Select from 'react-select'
+import axios from 'axios'
+import { fetchSensorTypesStart, fetchSensorTypesError, fetchSensorTypesSuccess } from '../redux/actions'
+import { getDisplayNameForSensorTypeValue } from '../utils/utils'
+
 
 const schema = yup.object({
     name: yup.string().min(4, 'Please select name a name longer than 4 characters').max(30, 'Please select name a name no longer than 30 characters').required('Please provide a name.'),
@@ -21,10 +25,19 @@ const AddMeasurementPointModal = () => {
     const onSubmit = data => {
         console.log("submit")
         console.log(data)
-
     }
 
-    const sensorTypes = [{ value: "PH", label: "PH" }, { value: "TEMPERATURE", label: "TEMPERATURE" }]
+    useEffect(() => {
+        console.log("fetching sensor types")
+        dispatch(fetchSensorTypesStart())
+        axios.get('http://localhost:8080/sensor-type')
+            .then(res => dispatch(fetchSensorTypesSuccess(res.data)))
+            .catch(err => dispatch(fetchSensorTypesError(err)))
+    }, [])
+
+    const sensorTypes = useSelector(state => state.sensorTypes.data).map(stype => ({ value: stype.sensorTypeValue, label: getDisplayNameForSensorTypeValue(stype.sensorTypeValue) }))
+
+    if (sensorTypes.fetching) return ("LOADING")
 
     return (
         <Modal show={show} onHide={() => dispatch({ type: 'HIDE_CREATE_MODAL' })}>

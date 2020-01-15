@@ -22,7 +22,7 @@ class App extends React.Component {
               height="30"
               className="d-inline-block align-top"
             />{' '}
-            Paricia Well Management
+            Nehalennia Well Management
     </Navbar.Brand>
         </Navbar>
         <MeasurementPointListContainer />
