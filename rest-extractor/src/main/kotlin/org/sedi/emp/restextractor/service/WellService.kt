@@ -46,6 +46,11 @@ class WellService(
         return wellRepository.save(well)
     }
 
+    @Transactional
+    fun createWell(well: Well): Well {
+        return wellRepository.save(well)
+    }
+
     fun findMeasurementsForWell(id: UUID): Optional<List<Measurement>> {
         logger.debug("Looking up well with ID $id ...")
         val maybeWell = findById(id)
