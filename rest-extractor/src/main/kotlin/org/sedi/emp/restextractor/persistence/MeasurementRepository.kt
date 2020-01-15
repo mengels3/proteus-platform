@@ -4,4 +4,7 @@ import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.springframework.data.repository.CrudRepository
 import java.util.*
 
-interface MeasurementRepository : CrudRepository<Measurement, UUID>
+interface MeasurementRepository : CrudRepository<Measurement, UUID> {
+
+    fun findByWellId(wellId: UUID): List<Measurement>
+}

@@ -8,8 +8,12 @@ deleteDatasources:
 datasources:
 - name: sedi
   type: postgres
-  host: localhost:5432
-  password: grafana
+  url: db:5432
   user: read
   database: sedi
   editable: false
+  isDefault: true
+  secureJsonData:
+      password: grafana
+  jsonData:
+      sslmode: "disable"

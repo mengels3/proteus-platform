@@ -1,6 +1,7 @@
 package org.sedi.emp.restextractor.config
 
 import org.sedi.emp.restextractor.DatabaseInitializer
+import org.sedi.emp.restextractor.persistence.MeasurementRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
@@ -20,9 +21,12 @@ class RestExtractorConfiguration {
     }
 
     @Bean
-    fun databaseInitializer(wellRepository: WellRepository): DatabaseInitializer {
+    fun databaseInitializer(
+            wellRepository: WellRepository,
+            measurementRepository: MeasurementRepository): DatabaseInitializer {
         return DatabaseInitializer(
-                wellRepository = wellRepository
+                wellRepository = wellRepository,
+                measurementRepository = measurementRepository
         )
     }
 }

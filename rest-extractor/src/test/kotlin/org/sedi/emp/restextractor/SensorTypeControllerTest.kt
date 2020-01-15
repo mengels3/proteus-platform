@@ -32,7 +32,6 @@ class SensorTypeControllerTest {
         assertThat(response, Is(Matchers.not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body!!.size, Is(2))
-
+        assertThat(response.body!!.size, Is(3))
     }
 }

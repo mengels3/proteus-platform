@@ -3,47 +3,46 @@ package org.sedi.emp.restextractor
 import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.masterdata.Well
 import org.sedi.emp.restextractor.model.sensordata.Measurement
+import org.sedi.emp.restextractor.persistence.MeasurementRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
+import java.math.BigDecimal
 import java.time.Instant
-import java.time.format.DateTimeFormatter
 
-open class DatabaseInitializer(private val wellRepository: WellRepository) {
+open class DatabaseInitializer(
+        private val wellRepository: WellRepository,
+        private val measurementRepository: MeasurementRepository) {
 
     fun initializeTestData() {
-        val ts = DateTimeFormatter
-                .ISO_INSTANT
-                .format(Instant.now())
-
-        val sensorType1 = SensorType(sensorTypeValue = "PHVALUE")
-        val sensorType2 = SensorType(sensorTypeValue = "TEMPERATURE")
-
-        val testMeasurement1 = Measurement(
-                timestamp = ts,
-                value = "3.3",
-                sensorType = sensorType1
-        )
-        val testMeasurement2 = Measurement(
-                timestamp = ts,
-                value = "77.0",
-                sensorType = sensorType2
-        )
+        val ph = SensorType(sensorTypeValue = "ph")
+        val temp = SensorType(sensorTypeValue = "temp")
+        val level = SensorType(sensorTypeValue = "level")
 
         val testWell1 = Well(
                 name = "New Well 01",
-                latitude = "51° 28′ 38″ N",
-                longtitude = "0°",
+                deviceId = "10009",
+                latitude = BigDecimal(44.7777),
+                longtitude = BigDecimal(55.2223),
                 altitude = 0.0,
                 maxDepth = 0.0,
                 diameter = 0.0,
-                sensorTypes = mutableListOf(
-                        sensorType1,
-                        sensorType2
-                ),
-                measurements = mutableListOf(
-                        testMeasurement1,
-                        testMeasurement2
-                )
+                sensorTypes = mutableListOf(ph, temp, level)
         )
-        wellRepository.save(testWell1)
+        val savedWell = wellRepository.save(testWell1)
+
+        val now = Instant.now()
+        val testMeasurement1 = Measurement(
+                timestamp = now,
+                value = "3.3",
+                sensorType = ph,
+                wellId = savedWell.id
+        )
+        val testMeasurement2 = Measurement(
+                timestamp = now,
+                value = "77.0",
+                sensorType = temp,
+                wellId = savedWell.id
+        )
+        measurementRepository.save(testMeasurement1)
+        measurementRepository.save(testMeasurement2)
     }
 }
