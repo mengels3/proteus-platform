@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "WELL")
-class Well(
+data class Well(
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,23 +17,23 @@ class Well(
         val deviceId: String,
 
         @Column(name = "w_name")
-        val name: String,
+        var name: String,
 
         @Column(name = "w_lat")
-        val latitude: BigDecimal,
+        var latitude: Double,
 
         @Column(name = "w_long")
-        val longtitude: BigDecimal,
+        var longtitude: Double,
 
         @Column(name = "w_altitude")
-        val altitude: Double,
+        var altitude: Double,
 
         @Column(name = "w_maxdepth")
-        val maxDepth: Double,
+        var maxDepth: Double,
 
         @Column(name = "w_diameter")
-        val diameter: Double,
+        var diameter: Double,
 
         @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val sensorTypes: MutableList<SensorType>
+        var sensorTypes: MutableList<SensorType>
 )

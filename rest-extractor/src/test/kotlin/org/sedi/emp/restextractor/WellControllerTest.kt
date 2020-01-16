@@ -3,7 +3,9 @@ package org.sedi.emp.restextractor
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.masterdata.Well
 import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,37 +26,55 @@ class WellControllerTest {
     private lateinit var restTemplate: TestRestTemplate
 
     @Test
-    fun testWellsRetrieval() {
-        val wells = fetchWells()
-        assertThat(wells, Is(not(nullValue())))
+    fun testMeasurementRetrievalForWell() {
+        assertThat(restTemplate, Is(not(nullValue())))
+        val wellResponse: ResponseEntity<Array<Well>> = restTemplate
+                .getForEntity("/well", Array<Well>::class.java)
+
+        assertThat(wellResponse, Is(not(nullValue())))
+        assertThat(wellResponse.statusCode, Is(HttpStatus.OK))
+        assertThat(wellResponse.body, Is(not(nullValue())))
+
+        val wellId = wellResponse
+                .body!!
+                .asSequence()
+                .filter { it.name == "New Well 01" }
+                .first()
+                .id
+
+        assertThat(restTemplate, Is(not(nullValue())))
+        val measurementsResponse: ResponseEntity<Array<Measurement>> = restTemplate
+                .getForEntity("/well/{wellId}/measurements", Array<Measurement>::class.java, wellId)
+
+        assertThat(measurementsResponse, Is(not(nullValue())))
+        assertThat(measurementsResponse.statusCode, Is(HttpStatus.OK))
+        assertThat(measurementsResponse.body, Is(not(nullValue())))
+        assertThat(measurementsResponse.body!!.size, Is(2))
     }
 
     @Test
-    fun testMeasurementRetrievalForWell() {
-        val wellId = fetchWells()[0].id
-
-        assertThat(restTemplate, Is(not(nullValue())))
-        val response: ResponseEntity<Array<Measurement>> = restTemplate
-                .getForEntity("/well/{wellId}/measurements", Array<Measurement>::class.java, wellId)
-
+    fun testWellCreationQuery() {
+        val level = SensorType(sensorTypeValue = "level")
+        val well = Well(
+                name = "New Well 02",
+                deviceId = "10002",
+                latitude = 54.777,
+                longtitude = 65.223,
+                altitude = 1.0,
+                maxDepth = 2.0,
+                diameter = 3.0,
+                sensorTypes = mutableListOf(level)
+        )
+        val response: ResponseEntity<Well> = restTemplate
+                .postForEntity("/well", well, Well::class.java)
         assertThat(response, Is(not(nullValue())))
-        assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body!!.size, Is(2))
+        assertThat(response.body?.id, Is(not(nullValue())))
     }
 
-    private fun fetchWells(): List<Well> {
-        assertThat(restTemplate, Is(not(nullValue())))
-        val response: ResponseEntity<Array<Well>> = restTemplate
-                .getForEntity("/well", Array<Well>::class.java)
-
-        assertThat(response, Is(not(nullValue())))
-        assertThat(response.statusCode, Is(HttpStatus.OK))
-        assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body!!.size, Is(1))
-
-        return response
-                .body
-                ?.toList()!!
+    @Test
+    @Disabled
+    fun testWellUpdateQuery() {
+        // TODO: restTemplate.put(url, request, class)
     }
 }

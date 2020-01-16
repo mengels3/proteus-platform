@@ -4,7 +4,6 @@ import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.sedi.emp.restextractor.model.sensordata.SensorData
 import org.sedi.emp.restextractor.persistence.MeasurementRepository
-import org.sedi.emp.restextractor.persistence.SensorTypeRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -15,8 +14,8 @@ import javax.transaction.Transactional
 @Service
 class MeasurementService(
         private val measurementRepository: MeasurementRepository,
-        private val sensorTypeRepository: SensorTypeRepository,
-        private val wellRepository: WellRepository) {
+        private val wellRepository: WellRepository,
+        private val sensorTypeService: SensorTypeService) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(MeasurementService::class.java)
@@ -31,40 +30,24 @@ class MeasurementService(
     @Transactional
     fun addMeasurement(sensorData: SensorData): Optional<List<Measurement>> {
         val deviceId: String = sensorData.deviceId
-        logger.debug("Looking up well for device ID $deviceId ...")
-        val maybeWell = wellRepository.findByDeviceId(deviceId)
+        val timestamp = sensorData.timestamp
 
-        return if (maybeWell.isPresent) {
-            val well = maybeWell.get()
-            val timestamp = sensorData.timestamp
+        val measurements = sensorData.dataPoints
+                .map { toMeasurement(it, timestamp) }
+                .toList()
 
-            val measurements = sensorData.dataPoints
-                    .map { toMeasurement(it, timestamp) }
-                    .toList()
-
-            logger.debug("Saving measurements:")
-            measurements
-                    .forEach { logger.debug(" -> $it") }
-
-            val savedMeasurements = measurements
-                    .asSequence()
-                    .map { saveMeasurement(it, well.id!!) }
-                    .toList()
-            Optional.of(savedMeasurements)
-
-        } else {
-            logger.info("Couldn't find well for deviceId $sensorData.deviceId!")
-            Optional.empty<List<Measurement>>()
-        }
+        return findWellAndSaveMeasurements(
+                measurements = measurements,
+                deviceId = deviceId
+        )
     }
 
-    private fun saveMeasurement(m: Measurement, wellId: UUID): Measurement {
-        val savedSensorType = sensorTypeRepository.save(m.sensorType)
-        val m2 = m.copy(
-                sensorType = savedSensorType,
-                wellId = wellId
+    @Transactional
+    fun addMeasurement(measurement: Measurement, deviceId: String): Optional<List<Measurement>> {
+        return findWellAndSaveMeasurements(
+                measurements = listOf(measurement),
+                deviceId = deviceId
         )
-        return measurementRepository.save(m2)
     }
 
     fun computeSensorData(rawSensorData: String): SensorData {
@@ -89,6 +72,38 @@ class MeasurementService(
                 timestamp = Instant.now(),
                 dataPoints = dataPoints
         )
+    }
+
+    private fun findWellAndSaveMeasurements(measurements: List<Measurement>, deviceId: String): Optional<List<Measurement>> {
+        logger.debug("Looking up well for device ID $deviceId ...")
+        val maybeWell = wellRepository.findByDeviceId(deviceId)
+
+        return if (maybeWell.isPresent) {
+            val well = maybeWell.get()
+
+            logger.debug("Saving measurements:")
+            measurements
+                    .forEach { logger.debug(" -> $it") }
+
+            val savedMeasurements = measurements
+                    .asSequence()
+                    .map { saveMeasurement(it, well.id!!) }
+                    .toList()
+            Optional.of(savedMeasurements)
+
+        } else {
+            logger.info("Couldn't find well for deviceId $deviceId!")
+            Optional.empty<List<Measurement>>()
+        }
+    }
+
+    private fun saveMeasurement(m: Measurement, wellId: UUID): Measurement {
+        val savedSensorType = sensorTypeService.findOrCreate(m.sensorType)
+        val m2 = m.copy(
+                sensorType = savedSensorType,
+                wellId = wellId
+        )
+        return measurementRepository.save(m2)
     }
 
     private fun computeKeyValue(rawKeyValue: String): Pair<String, String> {

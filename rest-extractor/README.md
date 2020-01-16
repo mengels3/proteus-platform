@@ -14,48 +14,26 @@ $ mvn spring-boot:run
 $ curl -d 'data=test12345' http://localhost:8080/publish
 ```
 
-### View Measurements for Well
+### View measurements and wells
+Show all wells:
 ```bash
 $ curl http://localhost:8080/well/
-[
-  {
-    "id": 1,
-    "name": "New Well 01",
-    "latitude": "51° 28′ 38″ N",
-    "longtitude": "0°",
-    "altitude": 0.0,
-    "maxDepth": 0.0,
-    "diameter": 0.0,
-    "sensorTypes": [
-      {
-        "id": 1,
-        "sensorTypeValue": "PHVALUE"
-      },
-      {
-        "id": 2,
-        "sensorTypeValue": "TEMPERATURE"
-      }
-    ],
-    "measurements": [
-      {
-        "id": 1,
-        "timestamp": "2020-01-06T19:28:00.777650Z",
-        "value": "3.3",
-        "sensorType": {
-          "id": 1,
-          "sensorTypeValue": "PHVALUE"
-        }
-      },
-      {
-        "id": 2,
-        "timestamp": "2020-01-06T19:28:00.777650Z",
-        "value": "77.0",
-        "sensorType": {
-          "id": 2,
-          "sensorTypeValue": "TEMPERATURE"
-        }
-      }
-    ]
-  }
-]
+```
+
+Show all measurements for a specific well:
+```bash
+$ curl http://localhost:8080/well/c3aca5f0-5612-4ff8-ba31-80f5153c5de9/measurements
+```
+
+### Insert a test well
+Via Curl:
+```bash
+$ curl -H "Content-Type: application/json" -d '{"id":null,"deviceId":"10002","name":"New Well 02","latitude":54.777,
+    "longtitude":65.223,"altitude":1.0,"maxDepth":2.0,"diameter":3.0,"sensorTypes":[{"id":null,"sensorTypeValue":"level"}]}' http://localhost:8080/well/
+```
+
+Via Postgres CLI:
+```bash
+=# insert into well (w_id, w_device_id, w_name, w_lat, w_long, w_altitude, w_maxdepth, w_diameter)
+    values ('14db6581-d804-4b5b-b45f-247f6cc21b87', 10010, 'Bill Clinton', 33.11, 22.77, 0, 67, 2);
 ```
