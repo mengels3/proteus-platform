@@ -30,19 +30,21 @@ open class DatabaseInitializer(
         val savedWell = wellRepository.save(testWell1)
 
         val now = Instant.now()
-        val testMeasurement1 = Measurement(
-                timestamp = now,
-                value = "3.3",
-                sensorType = ph,
-                wellId = savedWell.id
-        )
-        val testMeasurement2 = Measurement(
-                timestamp = now,
-                value = "77.0",
-                sensorType = temp,
-                wellId = savedWell.id
-        )
-        measurementRepository.save(testMeasurement1)
-        measurementRepository.save(testMeasurement2)
+        for (n in 0 until 100) {
+            val testMeasurement1 = Measurement(
+                    timestamp = now.minusSeconds(n * 60 * 10L),
+                    value = "3."+n,
+                    sensorType = ph,
+                    wellId = savedWell.id
+            )
+            val testMeasurement2 = Measurement(
+                    timestamp = now.minusSeconds(n * 60 * 10L),
+                    value = "7"+n+".0",
+                    sensorType = level,
+                    wellId = savedWell.id
+            )
+            measurementRepository.save(testMeasurement1)
+            measurementRepository.save(testMeasurement2)
+        }
     }
 }
