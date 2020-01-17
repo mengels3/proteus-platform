@@ -65,6 +65,7 @@ class MeasurementService(
         val dataPoints = keyValues
                 .filter { it.first != deviceID }
                 .map { Pair(computeSensorType(it.first), it.second) }
+                .filter { checkSanity(it) }
                 .toList()
 
         return SensorData(
@@ -72,6 +73,18 @@ class MeasurementService(
                 timestamp = Instant.now(),
                 dataPoints = dataPoints
         )
+    }
+
+    private fun checkSanity(sensorTypeValuePair: Pair<SensorType, String>): Boolean {
+        return when (sensorTypeValuePair.first.sensorTypeValue) {
+            "ph" -> checkPhValue(sensorTypeValuePair.second)
+            else -> true
+        }
+    }
+
+    private fun checkPhValue(phValue: String): Boolean {
+        val doublePhValue = phValue.toDoubleOrNull()
+        return (doublePhValue != null) && (doublePhValue > 0) && (doublePhValue < 14)
     }
 
     private fun findWellAndSaveMeasurements(measurements: List<Measurement>, deviceId: String): Optional<List<Measurement>> {

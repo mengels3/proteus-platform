@@ -27,8 +27,8 @@ class MasterDataPersistenceTest {
         assertThat(wellRepository.count(), Is(1L))
 
         val testWell1 = Well(
-                name = "New Well 01",
-                deviceId = "456456456",
+                name = "New Well 099",
+                deviceId = "9996",
                 latitude = 33.2222,
                 longtitude = 22.5689,
                 altitude = 0.0,

@@ -1,6 +1,5 @@
 package org.sedi.emp.restextractor.model.masterdata
 
-import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
 
@@ -13,27 +12,27 @@ data class Well(
         @Column(name = "w_id")
         var id: UUID? = null,
 
-        @Column(name = "w_device_id")
+        @Column(name = "w_device_id", unique = true)
         val deviceId: String,
 
-        @Column(name = "w_name")
-        var name: String,
+        @Column(name = "w_name", unique = true)
+        val name: String,
 
         @Column(name = "w_lat")
-        var latitude: Double,
+        val latitude: Double,
 
         @Column(name = "w_long")
-        var longtitude: Double,
+        val longtitude: Double,
 
         @Column(name = "w_altitude")
-        var altitude: Double,
+        val altitude: Double,
 
         @Column(name = "w_maxdepth")
-        var maxDepth: Double,
+        val maxDepth: Double,
 
         @Column(name = "w_diameter")
-        var diameter: Double,
+        val diameter: Double,
 
         @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        var sensorTypes: MutableList<SensorType>
+        val sensorTypes: MutableList<SensorType>
 )

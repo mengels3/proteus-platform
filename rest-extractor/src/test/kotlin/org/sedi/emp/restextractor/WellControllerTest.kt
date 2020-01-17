@@ -3,7 +3,6 @@ package org.sedi.emp.restextractor
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.sedi.emp.restextractor.model.masterdata.SensorType
 import org.sedi.emp.restextractor.model.masterdata.Well
@@ -11,6 +10,8 @@ import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.test.annotation.DirtiesContext
@@ -68,13 +69,32 @@ class WellControllerTest {
         val response: ResponseEntity<Well> = restTemplate
                 .postForEntity("/well", well, Well::class.java)
         assertThat(response, Is(not(nullValue())))
+        assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
         assertThat(response.body?.id, Is(not(nullValue())))
     }
 
     @Test
-    @Disabled
     fun testWellUpdateQuery() {
-        // TODO: restTemplate.put(url, request, class)
+        val level = SensorType(sensorTypeValue = "level")
+        val temp = SensorType(sensorTypeValue = "temp")
+        val well = Well(
+                name = "New Well 33",
+                deviceId = "10009",
+                latitude = 54.777,
+                longtitude = 65.223,
+                altitude = 1.0,
+                maxDepth = 2.0,
+                diameter = 3.0,
+                sensorTypes = mutableListOf(temp, level)
+        )
+        val request: HttpEntity<Well> = HttpEntity(well)
+
+        val response: ResponseEntity<Well> = restTemplate
+                .exchange("/well", HttpMethod.PUT, request, Well::class.java)
+        assertThat(response, Is(not(nullValue())))
+        assertThat(response.statusCode, Is(HttpStatus.OK))
+        assertThat(response.body, Is(not(nullValue())))
+        assertThat(response.body?.id, Is(not(nullValue())))
     }
 }

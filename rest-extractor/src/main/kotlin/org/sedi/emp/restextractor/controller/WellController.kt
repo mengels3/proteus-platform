@@ -37,7 +37,7 @@ class WellController(private val wellService: WellService) {
     }
 
     @PutMapping("/well")
-    fun updateWell(well: Well): Well {
-        return wellService.update(well)
+    fun updateWell(@RequestBody well: Well): ResponseEntity<Well> {
+        return ResponseEntity.of(wellService.update(well))
     }
 }

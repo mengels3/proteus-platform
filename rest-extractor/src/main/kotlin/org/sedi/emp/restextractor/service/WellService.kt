@@ -21,43 +21,8 @@ class WellService(
     }
 
     @Transactional
-    fun create(
-            deviceId: String,
-            name: String,
-            latitude: Double,
-            longtitude: Double,
-            altitude: Double,
-            maxDepth: Double,
-            diameter: Double,
-            sensorTypes: List<SensorType>): Well {
-        // some of the given sensor types might already exist:
-        val savedSensorTypes = sensorTypes
-                .asSequence()
-                .map { sensorTypeService.findOrCreate(it) }
-                .toMutableList()
-
-        // create the POJO:
-        val well = Well(
-                name = name,
-                deviceId = deviceId,
-                latitude = latitude,
-                longtitude = longtitude,
-                altitude = altitude,
-                maxDepth = maxDepth,
-                diameter = diameter,
-                sensorTypes = savedSensorTypes
-        )
-
-        // save it:
-        return wellRepository.save(well)
-    }
-
-    @Transactional
     fun create(well: Well): Well {
-        val savedSensorTypes = well.sensorTypes
-                .asSequence()
-                .map { sensorTypeService.findOrCreate(it) }
-                .toMutableList()
+        val savedSensorTypes = findOrCreateSensorTypes(well)
         val w2 = well.copy(sensorTypes = savedSensorTypes)
         return wellRepository.save(w2)
     }
@@ -88,20 +53,35 @@ class WellService(
     }
 
     @Transactional
-    fun update(well: Well): Well {
+    fun update(well: Well): Optional<Well> {
+        logger.debug("Updating well: $well")
+        val sensorTypes = findOrCreateSensorTypes(well).toList()
         val optionalWell = wellRepository.findByDeviceId(well.deviceId)
         return if (optionalWell.isPresent) {
-            val w = optionalWell.get()
-
-            // TODO: make these immutable values again and use deepCopy()!
-            w.altitude = well.altitude
-            w.diameter = well.diameter
-            w.maxDepth = well.maxDepth
-
-            wellRepository.save(w)
-
+            Optional.of(copyAndUpdate(well, optionalWell.get(), sensorTypes))
         } else {
-            wellRepository.save(well)
+            Optional.empty()
         }
+    }
+
+    private fun copyAndUpdate(requestWell: Well, persistentWell: Well, sensorTypes: List<SensorType>): Well {
+        val w = persistentWell.copy(
+                altitude = requestWell.altitude,
+                diameter = requestWell.diameter,
+                maxDepth = requestWell.maxDepth,
+                sensorTypes = sensorTypes.toMutableList()
+        )
+        return wellRepository.save(w)
+    }
+
+    private fun findOrCreateSensorTypes(well: Well): MutableList<SensorType> {
+        return findOrCreateSensorTypes(well.sensorTypes)
+    }
+
+    private fun findOrCreateSensorTypes(sensorTypes: List<SensorType>): MutableList<SensorType> {
+        return sensorTypes
+                .asSequence()
+                .map { sensorTypeService.findOrCreate(it) }
+                .toMutableList()
     }
 }
