@@ -50,7 +50,7 @@ class WellControllerTest {
         assertThat(measurementsResponse, Is(not(nullValue())))
         assertThat(measurementsResponse.statusCode, Is(HttpStatus.OK))
         assertThat(measurementsResponse.body, Is(not(nullValue())))
-        assertThat(measurementsResponse.body!!.size, Is(2))
+        assertThat(measurementsResponse.body!!.size, Is(101))
     }
 
     @Test

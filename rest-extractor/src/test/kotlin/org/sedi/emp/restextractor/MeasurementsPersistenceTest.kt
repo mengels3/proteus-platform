@@ -35,7 +35,7 @@ class MeasurementsPersistenceTest {
         assertThat(measurements1.isPresent, Is(true))
 
         val oldMeasurementCount = measurements1.get().size
-        assertThat(oldMeasurementCount, Is(2))
+        assertThat(oldMeasurementCount, Is(101))
 
         val rawSensorData = "device_id=10009;level=0.77;temp=18.50;ph=7.345"
         val sensorData = measurementService.computeSensorData(rawSensorData)

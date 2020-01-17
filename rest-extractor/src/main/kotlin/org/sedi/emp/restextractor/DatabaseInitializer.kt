@@ -37,8 +37,8 @@ open class DatabaseInitializer(
         val savedWell = wellService.create(testWell1)
 
         val now = Instant.now()
-
-        val savedMeasurementCount = (0..100).asSequence()
+        val savedMeasurementCount = (0..100)
+                .asSequence()
                 .map {
                     Measurement(
                             timestamp = now.minusSeconds(it * 60 * 10L),
@@ -50,7 +50,7 @@ open class DatabaseInitializer(
                 .map { measurementService.addMeasurement(it, deviceId) }
                 .filter { it.isPresent }
                 .count()
-        
+
         logger.debug("I saved $savedMeasurementCount measurements!")
     }
 }
