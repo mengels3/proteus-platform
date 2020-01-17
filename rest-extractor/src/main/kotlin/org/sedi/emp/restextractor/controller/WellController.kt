@@ -5,9 +5,7 @@ import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.sedi.emp.restextractor.service.WellService
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -28,5 +26,18 @@ class WellController(private val wellService: WellService) {
     fun getMeasurementsForWell(@PathVariable id: UUID): ResponseEntity<List<Measurement>> {
         logger.debug("getMeasurementsForWell($id)")
         return ResponseEntity.of(wellService.findMeasurementsForWell(id))
+    }
+
+    @PostMapping("/well")
+    fun postNewWell(@RequestBody well: Well): Well {
+        logger.debug("Got a new well: $well")
+        val savedWell = wellService.create(well)
+        logger.debug("Returning saved well: $savedWell")
+        return savedWell
+    }
+
+    @PutMapping("/well")
+    fun updateWell(@RequestBody well: Well): ResponseEntity<Well> {
+        return ResponseEntity.of(wellService.update(well))
     }
 }
