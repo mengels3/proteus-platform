@@ -7,8 +7,8 @@ CREATE TABLE WELL(
 	w_id UUID primary key,
 	w_device_id VARCHAR (255) not null,
 	w_name VARCHAR (255) not null,
-	w_lat decimal(19,2) not null,
-	w_long decimal(19,2) not null,
+	w_lat float not null,
+	w_long float not null,
 	w_altitude float,
 	w_maxdepth float,
 	w_diameter float
@@ -33,6 +33,7 @@ CREATE TABLE WELL_SENSOR_TYPES(
 );
 
 CREATE INDEX pk_01_idx ON WELL_SENSOR_TYPES (well_w_id, sensor_types_st_id);
+CREATE INDEX uk_02_idx ON SENSOR_TYPE (st_value);
 
 /* Insert initial data */
 INSERT INTO Systemparameter(sp_name,sp_value) VALUES ('dbversion','1.0');

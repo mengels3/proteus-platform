@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sedi
+    url: jdbc:postgresql://db:5432/sedi
     driverClassName: org.postgresql.Driver
     username: admin
     password: "sedi@uni1"
