@@ -1,20 +1,15 @@
 package org.sedi.emp.restextractor
 
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
-import org.junit.jupiter.api.Disabled
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
-import org.sedi.emp.restextractor.model.masterdata.SensorType
-import org.sedi.emp.restextractor.model.masterdata.Well
-import org.sedi.emp.restextractor.model.sensordata.Measurement
-import org.sedi.emp.restextractor.persistence.MeasurementRepository
-import org.sedi.emp.restextractor.persistence.WellRepository
+import org.sedi.emp.restextractor.service.MeasurementService
+import org.sedi.emp.restextractor.service.WellService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import org.hamcrest.Matchers.`is` as Is
 
 @SpringBootTest
@@ -23,38 +18,34 @@ import org.hamcrest.Matchers.`is` as Is
 class MeasurementsPersistenceTest {
 
     @Autowired
-    private lateinit var measurementRepository: MeasurementRepository
+    private lateinit var wellService: WellService
 
     @Autowired
-    private lateinit var wellRepository: WellRepository
+    private lateinit var measurementService: MeasurementService
 
     @Test
-    @Disabled // TODO: lazy fetching does not work?
     fun testMeasurementPersistence() {
-        val wells = wellRepository.findAll()
-        assertThat(wells, Is(not(nullValue())))
-        assertThat(wells.count(), Is(greaterThan(0)))
+        assertThat(wellService, Is(not(nullValue())))
+        val well = wellService.findAll().first()
+        assertThat(well, Is(not(nullValue())))
+        assertThat(well.id, Is(not(nullValue())))
 
-        val testWell: Well = wells.first()
-        assertThat(testWell, Is(not(nullValue())))
-        assertThat(testWell.sensorTypes.count(), Is(greaterThan(0)))
+        val measurements1 = wellService.findMeasurementsForWell(well.id!!)
+        assertThat(measurements1, Is(not(nullValue())))
+        assertThat(measurements1.isPresent, Is(true))
 
-        // this must be part of the "business logic":  check if the given
-        // sensor type is compatible with the well (here we'll just pick one):
-        val sensorType: SensorType = testWell
-                .sensorTypes
-                .first()
+        val oldMeasurementCount = measurements1.get().size
+        assertThat(oldMeasurementCount, Is(2))
 
-        val ts = DateTimeFormatter
-                .ISO_INSTANT
-                .format(Instant.now())
+        val rawSensorData = "device_id=10009;level=0.77;temp=18.50;ph=7.345"
+        val sensorData = measurementService.computeSensorData(rawSensorData)
+        val result = measurementService.addMeasurement(sensorData)
+        assertThat(result, Is(not(nullValue())))
+        assertThat(result.isPresent, Is(true))
 
-        val testMeasurement1 = Measurement(
-                timestamp = ts,
-                value = "3.3",
-                sensorType = sensorType
-        )
-        measurementRepository.save(testMeasurement1)
-        assertThat(measurementRepository.count(), Is(3L))
+        val measurements2 = wellService.findMeasurementsForWell(well.id!!)
+        assertThat(measurements2, Is(not(nullValue())))
+        assertThat(measurements2.isPresent, Is(true))
+        assertThat(measurements2.get().size, Is(oldMeasurementCount + 3))
     }
 }
