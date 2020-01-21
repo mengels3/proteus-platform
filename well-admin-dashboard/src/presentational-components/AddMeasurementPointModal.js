@@ -12,7 +12,7 @@ import { getDisplayNameForSensorTypeValue } from '../utils/utils'
 
 const schema = yup.object({
     name: yup.string().min(4, 'Please select name a name longer than 4 characters').max(30, 'Please select name a name no longer than 30 characters').required('Please provide a name.'),
-    depth: yup.number().required('Please provide the well depth.'),
+    maxDepth: yup.number().required('Please provide the well depth.'),
     diameter: yup.number().required('Please provide the well diameter.'),
     sensorTypes: yup.array().min(1, 'At least one measurement is required.'),
     deviceId: yup.string().min(3, 'Please provide a device id longer that 2 characters.').max(20, 'Please provide a device no longer than 20 characters.').required(),
@@ -28,7 +28,6 @@ const AddMeasurementPointModal = () => {
 
     const onSubmit = data => {
         const newData = { ...data, sensorTypes: data.sensorTypes.map(st => ({ sensorTypeValue: st.value })) }
-        console.log(newData)
         axios.post('http://localhost:8080/well', newData)
             .then(res => {
                 console.log(`Created new well and server answered with status code ${res.status}.`)
@@ -80,11 +79,11 @@ const AddMeasurementPointModal = () => {
                                     <Form.Group as={Col} controlId="formBasicDepth">
                                         <Form.Label>Depth</Form.Label>
                                         <InputGroup>
-                                            <Form.Control type="number" name="depth" value={values.depth} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.depth && !!errors.depth} placeholder="Enter depth" />
+                                            <Form.Control type="number" name="maxDepth" value={values.maxDepth} onBlur={handleBlur} onChange={handleChange} isInvalid={touched.maxDepth && !!errors.maxDepth} placeholder="Enter depth" />
                                             <InputGroup.Append>
                                                 <InputGroup.Text>meters</InputGroup.Text>
                                             </InputGroup.Append>
-                                            <Form.Control.Feedback type="invalid">{errors.depth}</Form.Control.Feedback>
+                                            <Form.Control.Feedback type="invalid">{errors.maxDepth}</Form.Control.Feedback>
                                         </InputGroup>
                                     </Form.Group>
                                     <Form.Group as={Col} controlId="formBasicDiameter">

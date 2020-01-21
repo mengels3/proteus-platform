@@ -4,9 +4,9 @@ import {
 import MeasurementPointList from '../presentational-components/MeasurementPointList'
 import {
   showModal,
-  fetchUsersStart,
-  fetchUsersError,
-  fetchUsersSuccess
+  fetchMeasurementPointsStart,
+  fetchMeasurementPointsError,
+  fetchMeasurementPointsSuccess
 } from '../redux/actions'
 import axios from 'axios'
 
@@ -19,10 +19,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onItemEdit: item => dispatch(showModal(item)),
   fetchMeasurementPoints: () => {
-    dispatch(fetchUsersStart())
+    dispatch(fetchMeasurementPointsStart())
     return axios.get('http://localhost:8080/well')
-      .then(res => dispatch(fetchUsersSuccess(res.data)))
-      .catch(err => dispatch(fetchUsersError(err)))
+      .then(res => dispatch(fetchMeasurementPointsSuccess(res.data)))
+      .catch(err => dispatch(fetchMeasurementPointsError(err)))
   }
 })
 

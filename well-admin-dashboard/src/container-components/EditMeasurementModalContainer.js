@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import EditMeasurementModal from "../presentational-components/EditMeasurementModal";
-import { closeModal, saveChanges, deleteMeasurement } from '../redux/actions'
+import { closeModal, updateMeasurementPoint, deleteMeasurement } from '../redux/actions'
 
 const mapStateToProps = state => ({
   data: state.modal.data,
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSave: (measurementPoint) => dispatch(saveChanges(measurementPoint)),
+  onSave: (measurementPoint) => dispatch(updateMeasurementPoint(measurementPoint)),
   onDeleteMeasurement: (measurement) => dispatch(deleteMeasurement(measurement))
 })
 

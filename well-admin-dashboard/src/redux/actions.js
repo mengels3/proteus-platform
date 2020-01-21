@@ -39,6 +39,14 @@ export const closeModal = () => ({
     type: HIDE_MODAL
 })
 
+export function updateMeasurementPoint(measurementPoint) {
+    return function (dispatch) {
+        return axios.put("http://localhost:8080/well", measurementPoint)
+            .then(axios.get("http://localhost:8080/well")
+                .then(res => dispatch(fetchMeasurementPointsSuccess(res.data))))
+    }
+}
+
 export const saveChanges = (measurementPoint) => ({
     type: SAVE_CHANGES,
     payload: measurementPoint
@@ -63,16 +71,16 @@ export const fetchSensorTypesError = (error) => ({
     payload: error
 })
 
-export const fetchUsersStart = () => ({
+export const fetchMeasurementPointsStart = () => ({
     type: FETCH_MEASUREMENT_POINTS_START
 })
 
-export const fetchUsersSuccess = (data) => ({
+export const fetchMeasurementPointsSuccess = (data) => ({
     type: FETCH_MEASUREMENT_POINTS_SUCCESS,
     payload: data
 })
 
-export const fetchUsersError = (err) => ({
+export const fetchMeasurementPointsError = (err) => ({
     type: FETCH_MEASUREMENT_POINTS_ERROR,
     payload: err
 })

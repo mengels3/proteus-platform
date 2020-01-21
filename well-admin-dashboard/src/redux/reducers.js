@@ -1,19 +1,15 @@
-import { ADD_MEASUREMENT_POINT, FETCH_SENSOR_TYPES_START, FETCH_SENSOR_TYPES_SUCCESS, FETCH_SENSOR_TYPES_ERROR, CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
-import { combineReducers } from "redux";
+import { ADD_MEASUREMENT_POINT, FETCH_SENSOR_TYPES_START, FETCH_SENSOR_TYPES_SUCCESS, FETCH_SENSOR_TYPES_ERROR, CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, fetchMeasurementPointsStart, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
+import { combineReducers } from "redux"
+import axios from 'axios'
 
 const measurementPoints = (state = { data: [], fetching: false, error: null }, action) => {
   switch (action.type) {
-    case FETCH_MEASUREMENT_POINTS_START:
+    case fetchMeasurementPointsStart:
       return { ...state, fetching: true }
     case FETCH_MEASUREMENT_POINTS_SUCCESS:
       return { ...state, fetching: false, data: action.payload }
     case FETCH_MEASUREMENT_POINTS_ERROR:
       return { ...state, fetching: false, error: action.payload }
-    case SAVE_CHANGES:
-      return {
-        ...state,
-        data: state.data.map(point => point.id === action.payload.id ? action.payload : point)
-      }
     case ADD_MEASUREMENT_POINT:
       return { ...state, data: [...state.data, action.payload] }
     default: return state
