@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import MeasurementPointListContainer from './container-components/MeasurementPointListContainer'
-import EditMeasurementModalContainer from "./container-components/EditMeasurementModalContainer"
+import EditMeasurementModal from './presentational-components/EditMeasurementModal'
 import AddMeasurementPointButton from './presentational-components/AddMeasurementPointButton'
 import AddMeasurementPointModal from './presentational-components/AddMeasurementPointModal'
 import { Navbar } from 'react-bootstrap'
@@ -27,7 +27,7 @@ class App extends React.Component {
         </Navbar>
         <MeasurementPointListContainer />
         <AddMeasurementPointButton />
-        <EditMeasurementModalContainer />
+        <EditMeasurementModal />
         <AddMeasurementPointModal />
       </>
     );
