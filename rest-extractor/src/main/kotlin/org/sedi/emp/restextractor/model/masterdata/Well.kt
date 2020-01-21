@@ -22,7 +22,7 @@ data class Well(
         val latitude: Double,
 
         @Column(name = "w_long")
-        val longtitude: Double,
+        val longitude: Double,
 
         @Column(name = "w_altitude")
         val altitude: Double,

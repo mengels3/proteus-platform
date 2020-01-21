@@ -29,7 +29,7 @@ $ curl http://localhost:8080/well/c3aca5f0-5612-4ff8-ba31-80f5153c5de9/measureme
 Via Curl:
 ```bash
 $ curl -H "Content-Type: application/json" -d '{"id":null,"deviceId":"10002","name":"New Well 02","latitude":54.777,
-    "longtitude":65.223,"altitude":1.0,"maxDepth":2.0,"diameter":3.0,"sensorTypes":[{"id":null,"sensorTypeValue":"level"}]}' http://localhost:8080/well/
+    "longitude":65.223,"altitude":1.0,"maxDepth":2.0,"diameter":3.0,"sensorTypes":[{"id":null,"sensorTypeValue":"level"}]}' http://localhost:8080/well/
 ```
 
 Via Postgres CLI:
