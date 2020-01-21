@@ -1,18 +1,5 @@
-import { FETCH_SENSOR_TYPES_START, FETCH_SENSOR_TYPES_SUCCESS, FETCH_SENSOR_TYPES_ERROR, CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
+import { ADD_MEASUREMENT_POINT, FETCH_SENSOR_TYPES_START, FETCH_SENSOR_TYPES_SUCCESS, FETCH_SENSOR_TYPES_ERROR, CREATE_MODAL_IS_VALID, SHOW_MODAL, HIDE_MODAL, SAVE_CHANGES, DELETE_MEASUREMENT, FETCH_MEASUREMENT_POINTS_ERROR, FETCH_MEASUREMENT_POINTS_SUCCESS, FETCH_MEASUREMENT_POINTS_START, SHOW_CREATE_MODAL, HIDE_CREATE_MODAL } from "./actions";
 import { combineReducers } from "redux";
-
-// const initialData = [
-//   {
-//     name: "Chile-01",
-//     id: "e34810f0-8471-495b-aa3e-a338dc8b8de2",
-//     measurements: [{ name: "Temperature" }, { name: "pH" }, { name: "Water Level", parameters: [{ name: "diameter", value: 0.5 }] }]
-//   },
-//   {
-//     name: "Chile-02",
-//     id: "7c56dcca-1ec2-4b9c-9455-77830fc313e2",
-//     measurements: [{ name: "Temperature" }, { name: "pH" }]
-//   }
-// ];
 
 const measurementPoints = (state = { data: [], fetching: false, error: null }, action) => {
   switch (action.type) {
@@ -27,6 +14,8 @@ const measurementPoints = (state = { data: [], fetching: false, error: null }, a
         ...state,
         data: state.data.map(point => point.id === action.payload.id ? action.payload : point)
       }
+    case ADD_MEASUREMENT_POINT:
+      return { ...state, data: [...state.data, action.payload] }
     default: return state
   }
 }

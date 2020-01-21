@@ -4,6 +4,7 @@ export const SHOW_MODAL = 'SHOW_MODAL'
 export const HIDE_MODAL = 'HIDE_MODAL'
 export const SAVE_CHANGES = 'SAVE_CHANGES'
 export const DELETE_MEASUREMENT = 'DELETE_MEASUREMENT'
+export const ADD_MEASUREMENT_POINT = 'ADD_MEASUREMENT_POINT'
 
 export const FETCH_MEASUREMENT_POINTS_START = 'FETCH_MEASUREMENT_POINTS_START'
 export const FETCH_MEASUREMENT_POINTS_SUCCESS = 'FETCH_MEASUREMENT_POINTS_SUCCESS'
@@ -74,4 +75,9 @@ export const fetchUsersSuccess = (data) => ({
 export const fetchUsersError = (err) => ({
     type: FETCH_MEASUREMENT_POINTS_ERROR,
     payload: err
+})
+
+export const addMeasuementPoint = (measurementPoint) => ({
+    type: ADD_MEASUREMENT_POINT,
+    payload: measurementPoint
 })
