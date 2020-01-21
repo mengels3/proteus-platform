@@ -80,4 +80,21 @@ class MeasurementControllerTest {
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.NOT_FOUND))
     }
+
+    @Test
+    fun testPublishWrongPhValue() {
+        val urlEncodedBody = "data=device_id%3D10009%3Blevel%3D0.95%3Btemp%3D20.20%3Bph%3D7.27.296%3Blong%3D1000.00%3Blat%3D1000.00"
+        val httpHeaders = HttpHeaders()
+        httpHeaders.contentType = MediaType.APPLICATION_FORM_URLENCODED
+        val request: HttpEntity<String> = HttpEntity(urlEncodedBody, httpHeaders)
+
+        assertThat(restTemplate, Is(not(nullValue())))
+        val response: ResponseEntity<Array<Measurement>> = restTemplate
+                .postForEntity("/publish", request, Array<Measurement>::class.java)
+
+        assertThat(response, Is(not(nullValue())))
+        assertThat(response.statusCode, Is(HttpStatus.OK))
+        assertThat(response.body, Is(not(nullValue())))
+        assertThat(response.body!!.size, Is(4))
+    }
 }

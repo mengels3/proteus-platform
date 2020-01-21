@@ -1,6 +1,15 @@
+logging:
+  level:
+    ROOT: INFO
+    org.sedi: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
 spring:
   datasource:
-    url: jdbc:h2:mem:;INIT=RUNSCRIPT FROM '../db/setup_db.sql';
+    # TODO: add an additional "drop all;" statement:
+    #url: jdbc:h2:mem:;INIT=RUNSCRIPT FROM '../db/setup_db.sql';
+    #
+    url: jdbc:h2:mem:;
     driverClassName: org.h2.Driver
     username: sa
     password: ""
@@ -8,4 +17,5 @@ spring:
     properties:
       dialect: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: validate
+      # TODO: use "validate", once the drop is done for H2 above:
+      ddl-auto: create-drop

@@ -7,48 +7,24 @@ import org.sedi.emp.restextractor.persistence.MeasurementRepository
 import org.sedi.emp.restextractor.persistence.WellRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
 import java.util.*
 import javax.transaction.Transactional
 
 @Service
 class WellService(
         private val wellRepository: WellRepository,
-        private val measurementRepository: MeasurementRepository) {
+        private val measurementRepository: MeasurementRepository,
+        private val sensorTypeService: SensorTypeService) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(WellService::class.java)
     }
 
     @Transactional
-    fun createWell(
-            deviceId: String,
-            name: String,
-            latitude: BigDecimal,
-            longtitude: BigDecimal,
-            altitude: Double,
-            maxDepth: Double,
-            diameter: Double,
-            sensorTypes: List<SensorType>): Well {
-        // create the POJO:
-        val well = Well(
-                name = name,
-                deviceId = deviceId,
-                latitude = latitude,
-                longtitude = longtitude,
-                altitude = altitude,
-                maxDepth = maxDepth,
-                diameter = diameter,
-                sensorTypes = sensorTypes.toMutableList()
-        )
-
-        // save it:
-        return wellRepository.save(well)
-    }
-
-    @Transactional
-    fun createWell(well: Well): Well {
-        return wellRepository.save(well)
+    fun create(well: Well): Well {
+        val savedSensorTypes = findOrCreateSensorTypes(well)
+        val w2 = well.copy(sensorTypes = savedSensorTypes)
+        return wellRepository.save(w2)
     }
 
     fun findMeasurementsForWell(id: UUID): Optional<List<Measurement>> {
@@ -74,5 +50,38 @@ class WellService(
 
     fun findById(id: UUID): Optional<Well> {
         return wellRepository.findById(id)
+    }
+
+    @Transactional
+    fun update(well: Well): Optional<Well> {
+        logger.debug("Updating well: $well")
+        val sensorTypes = findOrCreateSensorTypes(well).toList()
+        val optionalWell = wellRepository.findByDeviceId(well.deviceId)
+        return if (optionalWell.isPresent) {
+            Optional.of(copyAndUpdate(well, optionalWell.get(), sensorTypes))
+        } else {
+            Optional.empty()
+        }
+    }
+
+    private fun copyAndUpdate(requestWell: Well, persistentWell: Well, sensorTypes: List<SensorType>): Well {
+        val w = persistentWell.copy(
+                altitude = requestWell.altitude,
+                diameter = requestWell.diameter,
+                maxDepth = requestWell.maxDepth,
+                sensorTypes = sensorTypes.toMutableList()
+        )
+        return wellRepository.save(w)
+    }
+
+    private fun findOrCreateSensorTypes(well: Well): MutableList<SensorType> {
+        return findOrCreateSensorTypes(well.sensorTypes)
+    }
+
+    private fun findOrCreateSensorTypes(sensorTypes: List<SensorType>): MutableList<SensorType> {
+        return sensorTypes
+                .asSequence()
+                .map { sensorTypeService.findOrCreate(it) }
+                .toMutableList()
     }
 }

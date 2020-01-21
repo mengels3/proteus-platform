@@ -40,7 +40,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -84,6 +83,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+                
+        <!-- Prediction -->
+		<dependency>
+		    <groupId>com.workday</groupId>
+		    <artifactId>timeseries-forecast</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
     </dependencies>
 
     <build>
