@@ -1,3 +1,11 @@
 .para {
   margin: auto;
 }
+
+.white {
+  color: white
+}
+
+.primary-background-color {
+  background-color: #0069c0;
+}

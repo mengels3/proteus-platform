@@ -24,7 +24,7 @@ class MeasurementListItem extends React.Component {
 
     return (
       <div className="measurements-info">
-        <div className="measurements-icon margin-left">
+        <div className="measurements-icon measurements-color margin-left">
           <FontAwesomeIcon icon={icon} />
         </div>
         <p className="text">{name}</p>
@@ -44,7 +44,7 @@ class MeasurementListItem extends React.Component {
                 <p className="detail-text"> {this.props.data.id}</p>
               </div>
               <div className="column margin-left">
-                <b className="measurements-text">Measurements</b>
+                <b className="measurements-text measurements-color">Measurements</b>
                 <div className="measurements-listing-row-wrap">
                   {this.props.data.sensorTypes.map(item => (
                     this.renderMeasurement(item)

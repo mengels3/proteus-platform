@@ -47,7 +47,7 @@ const EditMeasurementModal = () => {
   return (
     <Modal show={show} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit well</Modal.Title>
+        <Modal.Title>Edit Well</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik validationSchema={schema} onSubmit={(data) => onSave(data)} initialValues={{ name: data?.name, maxDepth: data?.maxDepth, diameter: data?.diameter, sensorTypes: activeSensorTypes, deviceId: data?.deviceId, altitude: data?.altitude, longitude: data?.longitude, latitude: data?.latitude }}>

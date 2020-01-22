@@ -51,7 +51,7 @@ const AddMeasurementPointModal = () => {
     return (
         <Modal show={show} onHide={() => dispatch({ type: 'HIDE_CREATE_MODAL' })}>
             <Modal.Header closeButton>
-                <Modal.Title>Creating new well</Modal.Title>
+                <Modal.Title>Create Well</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Formik validationSchema={schema} onSubmit={(data) => onSubmit(data)} initialValues={{ name: '', maxDepth: undefined, diameter: undefined, sensorTypes: [], deviceId: '', altitude: undefined, longitude: undefined, latitude: undefined }}>
