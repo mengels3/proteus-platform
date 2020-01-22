@@ -38,6 +38,14 @@ class WellController(private val wellService: WellService) {
 
     @PutMapping("/well")
     fun updateWell(@RequestBody well: Well): ResponseEntity<Well> {
+        logger.debug("Updating well...")
         return ResponseEntity.of(wellService.update(well))
+    }
+
+    @DeleteMapping("/well/{id}")
+    fun deleteWell(@PathVariable id: UUID): ResponseEntity<String> {
+        logger.debug("Deleting well...")
+        wellService.delete(id)
+        return ResponseEntity.ok("")
     }
 }

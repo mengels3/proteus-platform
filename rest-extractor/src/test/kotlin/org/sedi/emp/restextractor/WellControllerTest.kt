@@ -43,7 +43,6 @@ class WellControllerTest {
                 .first()
                 .id
 
-        assertThat(restTemplate, Is(not(nullValue())))
         val measurementsResponse: ResponseEntity<Array<Measurement>> = restTemplate
                 .getForEntity("/well/{wellId}/measurements", Array<Measurement>::class.java, wellId)
 
@@ -96,5 +95,33 @@ class WellControllerTest {
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
         assertThat(response.body?.id, Is(not(nullValue())))
+    }
+
+    @Test
+    fun testWellDeletion() {
+        val wellResponse1: ResponseEntity<Array<Well>> = restTemplate
+                .getForEntity("/well", Array<Well>::class.java)
+
+        assertThat(wellResponse1, Is(not(nullValue())))
+        assertThat(wellResponse1.statusCode, Is(HttpStatus.OK))
+        assertThat(wellResponse1.body, Is(not(nullValue())))
+        val wellCount1 = wellResponse1.body?.size!!
+
+        val id: String = wellResponse1
+                .body!!
+                .asSequence()
+                .filter { it.name == "New Well 01" }
+                .first()
+                .id!!
+                .toString()
+
+        restTemplate.delete("/well/{id}", id)
+
+        val wellResponse2: ResponseEntity<Array<Well>> = restTemplate
+                .getForEntity("/well", Array<Well>::class.java)
+        assertThat(wellResponse2, Is(not(nullValue())))
+        assertThat(wellResponse2.statusCode, Is(HttpStatus.OK))
+        assertThat(wellResponse2.body, Is(not(nullValue())))
+        assertThat(wellResponse2.body?.size!!, Is(wellCount1 - 1))
     }
 }
