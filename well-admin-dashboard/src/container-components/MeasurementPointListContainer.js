@@ -9,6 +9,7 @@ import {
   fetchMeasurementPointsSuccess
 } from '../redux/actions'
 import axios from 'axios'
+import config from '../config'
 
 const mapStateToProps = state => ({
   measurementPoints: state.measurementPoints.data,
@@ -20,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   onItemEdit: item => dispatch(showModal(item)),
   fetchMeasurementPoints: () => {
     dispatch(fetchMeasurementPointsStart())
-    return axios.get('http://localhost:8080/well')
+    return axios.get(`${config.backend.url}/well`)
       .then(res => dispatch(fetchMeasurementPointsSuccess(res.data)))
       .catch(err => dispatch(fetchMeasurementPointsError(err)))
   }

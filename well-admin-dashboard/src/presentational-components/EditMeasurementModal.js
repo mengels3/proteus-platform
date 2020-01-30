@@ -9,6 +9,7 @@ import * as yup from 'yup'
 import Select from 'react-select'
 import axios from 'axios'
 import { getDisplayNameForSensorTypeValue } from '../utils/utils'
+import config from '../config'
 
 const schema = yup.object({
   name: yup.string().min(4, 'Please select name a name longer than 4 characters').max(30, 'Please select name a name no longer than 30 characters').required('Please provide a name.'),
@@ -36,7 +37,7 @@ const EditMeasurementModal = () => {
   useEffect(() => {
     console.log("fetching sensor types")
     dispatch(fetchSensorTypesStart())
-    axios.get('http://localhost:8080/sensor-type')
+    axios.get(`${config.backend.url}/sensor-type`)
       .then(res => dispatch(fetchSensorTypesSuccess(res.data)))
       .catch(err => dispatch(fetchSensorTypesError(err)))
   }, [])

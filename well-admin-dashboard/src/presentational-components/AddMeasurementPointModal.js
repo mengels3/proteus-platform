@@ -8,6 +8,7 @@ import Select from 'react-select'
 import axios from 'axios'
 import { addMeasuementPoint, fetchSensorTypesStart, fetchSensorTypesError, fetchSensorTypesSuccess, hideCreateModal } from '../redux/actions'
 import { getDisplayNameForSensorTypeValue } from '../utils/utils'
+import config from '../config'
 
 
 const schema = yup.object({
@@ -28,7 +29,7 @@ const AddMeasurementPointModal = () => {
 
     const onSubmit = data => {
         const newData = { ...data, sensorTypes: data.sensorTypes.map(st => ({ sensorTypeValue: st.value })) }
-        axios.post('http://localhost:8080/well', newData)
+        axios.post(`${config.backend.url}/well`, newData)
             .then(res => {
                 console.log(`Created new well and server answered with status code ${res.status}.`)
                 dispatch(addMeasuementPoint(res.data))
@@ -39,7 +40,7 @@ const AddMeasurementPointModal = () => {
     useEffect(() => {
         console.log("fetching sensor types")
         dispatch(fetchSensorTypesStart())
-        axios.get('http://localhost:8080/sensor-type')
+        axios.get(`${config.backend.url}/sensor-type`)
             .then(res => dispatch(fetchSensorTypesSuccess(res.data)))
             .catch(err => dispatch(fetchSensorTypesError(err)))
     }, [])

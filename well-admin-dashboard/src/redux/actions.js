@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { wait } from '@testing-library/react'
+import config from '../config'
 
 export const SHOW_MODAL = 'SHOW_MODAL'
 export const HIDE_MODAL = 'HIDE_MODAL'
@@ -42,8 +43,8 @@ export const closeModal = () => ({
 
 export function updateMeasurementPoint(measurementPoint) {
     return function (dispatch) {
-        return axios.put("http://localhost:8080/well", measurementPoint)
-            .then(() => axios.get("http://localhost:8080/well"))
+        return axios.put(`${config.backend.url}/well`, measurementPoint)
+            .then(() => axios.get(`${config.backend.url}/well`))
             .then(res => dispatch(fetchMeasurementPointsSuccess(res.data)))
     }
 }
