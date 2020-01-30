@@ -7,3 +7,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Run Webserver
 
 ### npm start
+
+## Deploy to production
+
+### npm i -g serve
+### npm run build:prod
+### serve -l <Port> -s build
