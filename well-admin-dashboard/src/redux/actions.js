@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { wait } from '@testing-library/react'
 import config from '../config'
 
 export const SHOW_MODAL = 'SHOW_MODAL'

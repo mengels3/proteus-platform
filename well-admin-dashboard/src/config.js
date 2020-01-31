@@ -6,7 +6,7 @@ const dev = {
 
 const prod = {
     backend: {
-        url: "http://localhost:8080"
+        url: "http://sedichilevm.northeurope.cloudapp.azure.com:8080"
     }
 }
 

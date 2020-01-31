@@ -12,4 +12,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### npm i -g serve
 ### npm run build:prod
-### serve -l 3000 -s build
+### serve -l 5000 -s build
