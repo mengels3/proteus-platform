@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 class WellController(private val wellService: WellService) {
 
