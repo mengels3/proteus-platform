@@ -53,7 +53,7 @@ class RestExtractorConfiguration {
     fun webMvcConfigurer(): WebMvcConfigurer{
         return object: WebMvcConfigurer{
             override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/**").allowedMethods("GET","PUT", "POST", "UPDATE", "DELETE").allowedOrigins("http://localhost:5000", "http://localhost:3000")
+                registry.addMapping("/**").allowedMethods("GET","PUT", "POST", "UPDATE", "DELETE")
             }
         }
     }
