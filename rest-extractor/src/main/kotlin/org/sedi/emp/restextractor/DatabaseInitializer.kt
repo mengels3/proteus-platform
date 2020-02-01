@@ -6,12 +6,17 @@ import org.sedi.emp.restextractor.model.sensordata.Measurement
 import org.sedi.emp.restextractor.service.MeasurementService
 import org.sedi.emp.restextractor.service.SensorTypeService
 import org.sedi.emp.restextractor.service.WellService
+import org.slf4j.LoggerFactory
 import java.time.Instant
 
 open class DatabaseInitializer(
         private val wellService: WellService,
         private val measurementService: MeasurementService,
         private val sensorTypeService: SensorTypeService) {
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(DatabaseInitializer::class.java)
+    }
 
     fun initializeTestData() {
         val ph = sensorTypeService.findOrCreate(SensorType(sensorTypeValue = "ph"))
@@ -32,19 +37,20 @@ open class DatabaseInitializer(
         val savedWell = wellService.create(testWell1)
 
         val now = Instant.now()
-        val testMeasurement1 = Measurement(
-                timestamp = now,
-                value = "3.3",
-                sensorType = ph,
-                wellId = savedWell.id
-        )
-        val testMeasurement2 = Measurement(
-                timestamp = now,
-                value = "77.0",
-                sensorType = temp,
-                wellId = savedWell.id
-        )
-        measurementService.addMeasurement(testMeasurement1, deviceId)
-        measurementService.addMeasurement(testMeasurement2, deviceId)
+        val savedMeasurementCount = (0..100)
+                .asSequence()
+                .map {
+                    Measurement(
+                            timestamp = now.minusSeconds(it * 60 * 10L),
+                            value = "3.$it",
+                            sensorType = ph,
+                            wellId = savedWell.id
+                    )
+                }
+                .map { measurementService.addMeasurement(it, deviceId) }
+                .filter { it.isPresent }
+                .count()
+
+        logger.debug("I saved $savedMeasurementCount measurements!")
     }
 }
