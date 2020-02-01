@@ -52,6 +52,7 @@ class WellControllerTest {
         assertThat(measurementsResponse.body!!.size, Is(101))
     }
 
+
     @Test
     fun testWellCreationQuery() {
         val level = SensorType(sensorTypeValue = "level")
@@ -73,17 +74,36 @@ class WellControllerTest {
         assertThat(response.body?.id, Is(not(nullValue())))
     }
 
+
     @Test
     fun testWellUpdateQuery() {
+        val wellToUpdate = "New Well 01"
+
+        // get the ID of the well:
+        assertThat(restTemplate, Is(not(nullValue())))
+        val wellResponse: ResponseEntity<Array<Well>> = restTemplate
+                .getForEntity("/well", Array<Well>::class.java)
+        assertThat(wellResponse, Is(not(nullValue())))
+        assertThat(wellResponse.statusCode, Is(HttpStatus.OK))
+        assertThat(wellResponse.body, Is(not(nullValue())))
+
+        val wellBeforeUpdate: Well = wellResponse
+                .body!!
+                .asSequence()
+                .filter { it.name == wellToUpdate }
+                .first()
+
+        // update the well:
         val level = SensorType(sensorTypeValue = "level")
         val temp = SensorType(sensorTypeValue = "temp")
+        val newMaxDepth = wellBeforeUpdate.maxDepth + 200
         val well = Well(
-                name = "New Well 33",
+                name = wellToUpdate,
                 deviceId = "10009",
                 latitude = 54.777,
                 longitude = 65.223,
                 altitude = 1.0,
-                maxDepth = 2.0,
+                maxDepth = newMaxDepth,
                 diameter = 3.0,
                 sensorTypes = mutableListOf(temp, level)
         )
@@ -95,7 +115,20 @@ class WellControllerTest {
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
         assertThat(response.body?.id, Is(not(nullValue())))
+        assertThat(response.body?.id!!, Is(wellBeforeUpdate.id!!))
+        assertThat(response.body?.maxDepth!!, Is(newMaxDepth))
+
+        // fetch the well again and check its latitude:
+        val wellAfterUpdateResponse: ResponseEntity<Well> = restTemplate
+                .getForEntity("/well/{id}", Well::class.java, wellBeforeUpdate.id)
+        assertThat(wellAfterUpdateResponse, Is(not(nullValue())))
+        assertThat(wellAfterUpdateResponse.statusCode, Is(HttpStatus.OK))
+        assertThat(wellAfterUpdateResponse.body, Is(not(nullValue())))
+        val wellAfterUpdate: Well = wellAfterUpdateResponse.body!!
+        assertThat(wellAfterUpdate.id!!, Is(wellBeforeUpdate.id!!))
+        assertThat(wellAfterUpdate.maxDepth, Is(newMaxDepth))
     }
+
 
     @Test
     fun testWellDeletion() {

@@ -30,7 +30,7 @@ open class DatabaseInitializer(
                 latitude = 44.7777,
                 longitude = 55.2223,
                 altitude = 0.0,
-                maxDepth = 0.0,
+                maxDepth = 10.0,
                 diameter = 0.0,
                 sensorTypes = mutableListOf(ph, temp, level)
         )
