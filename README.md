@@ -1,59 +1,29 @@
-# sustainabiliteam-code
-The code that makes our water measuring and monitoring solution work!
+# Proteus Platform
+An environmental monitoring platform based on IoT-sensor networks.
 
-## HowTo
-### Sensors
-TODO
+## Motivation
+A platform and hardware artifact that aims at helping to tackle the ongoing fresh water crisis in rural parts of Chile. Was build by a team of graduatae students during the 2019/2020 semester's course on [Systems Engineering for Digital Innovations](https://www.is4.uni-koeln.de/de/teaching/master-modules/systems-engineering-for-digital-innovations/) at University of Cologne.
 
-## Rest-Extractor
-See [here](rest-extractor/README.md)!
+## Components
+### arduino_skeches
+The sketch used to gather certain metrics from wells:
+* temperature
+* pH value
+* level
 
-### Lora
-#### Gateway
-See [here](https://wiki.dragino.com/index.php?title=Connect_to_TTN#Create_Single_Channel_Gateway_By_LG01). Steps:
-* Connect the LG01's WAN port with your local router
-* connect your notebook to the new WLAN network (e.g. "dragino-1d1e14")
+Compatible with the [Arduino Uno Rev3](https://store.arduino.cc/arduino-uno-rev3).
 
-> TODO: the f*cking WLAN hot spot disappears after a couple of secs...
+### Dashboard
+A user-friendly dashboard to visualize data and predictions.
 
-#### Client
-For the Uno-based Dragino shield see [here](https://wiki.dragino.com/index.php?title=Connect_to_TTN#Use_LoRa_Shield_and_Arduino_as_LoRa_End_Device). Steps:
-* Download [arduino-lmic ](https://github.com/matthijskooijman/arduino-lmic) as a Zip file
-* Unpack and copy it to your arduino/libraries folder
+### DB
+Docker files for the default database.
 
-> Fix a compile error (in the current master) by adding a "static" at the beginning of line 231 in the
-> (unpacked) file libraries/arduino-lmic-master/src/lmic/oslmic.h!
-> See [this](https://github.com/matthijskooijman/arduino-lmic/issues/243) GitHub issue!
+### Rest-Extractor
+The API that receives all the environment data and persists it. See [here](rest-extractor/README.md) for build instructions.
 
-* Log into TTN and create a device
-* Set Activation Method=OTAA and copy the _Device EUI_ and the _App EUI_
-* Open the Arduino IDE, choose the LMIC OTAA example
-* and paste the EUIs into the source code
-* Copy our SEDI app key from [here](https://console.thethingsnetwork.org/applications/sedi/devices/uno1)
-* and paste it into the source code as well
+### Scripts
+Contains a sample script that runs on a [Dragino LG01-S LoRa Gateway](https://www.dragino.com/products/lora/item/119-lg01-s.html) and is used to transfer measurement data collected from all Arduinos nearby to the Proteus API.
 
-When trying ABP as activation method, copy
-* Network Session Key, the App Session Key
-* as well as the Device Address into the source code
-
-> The EUIDs need to be pasted byte-wise! And check the endianess of the pasted values!
-
-> See our [code](arduino_sketches/lmic_ttn_otaa_client/lmic_ttn_otaa_client.ino) for a complete sketch!
-
-> Do *not* commit the application's key or the device's session key! Commit *only* Semtech's dunmy key!
-
-To upload,
-* choose Tools -> Board -> "Arduino/Genuino Uno"
-* and Tools -> Programmer -> "AVRISP mkII"
-* as well as the proper USB port
-* Then click on the upload button: ez as that!
-
-#### Library/Sketch overview
-There are a couple of libraries (and sketches for each of them) for Arduino and Lora. This is what has worked for us (and did not) so far:
-
-Sketch               | Library/Driver   | Compiles for Dragino? | ...uploads? | What works?                               | What does not work?      | Act. Method
--------------------- | ---------------- | --------------------- | ----------- | ----------------------------------------- | ------------------------ | -----------
-rf95_lora_client     | RadioHead (RF95) | yes                   | yes         | Send "Hello" from one Dragino to another! | Sending packets to TTN   | ?
-lmic_ttn_otaa_client | LMIC             | yes                   | yes         | -                                         | Sending anything at all  | OTAA + ABP
-dragino_lmic_client  | LMIC             | yes                   | yes         | It at least sends smth. somehow!          | TTN doesnt receive pckts | ABP
-TTN example sketch   | ?                | NO                    | NO          | -                                         | Compiling / uploading    | ?
+### well-admin-dashboard
+An admin dashboard to manage master data on wells. See [here](well-admin-dashboard/README.md) for build instructions.
