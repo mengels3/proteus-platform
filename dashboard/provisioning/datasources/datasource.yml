@@ -21,4 +21,4 @@ datasources:
       sslmode: "disable"
 - name: prediction
   type: grafana-simple-json-datasource
-  url: http://platformapp:8080/prediction/
+  url: http://sedichilevm.northeurope.cloudapp.azure.com:8080/prediction/
