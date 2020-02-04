@@ -87,7 +87,7 @@
           ]
         },
         {
-          "datasource": "prediction2",
+          "datasource": "prediction",
           "refId": "C",
           "target": "[[w_id]],[[s_id]]",
           "type": "timeserie"
