@@ -1,11 +1,11 @@
-.measurement-listing{
+.measurement-listing {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     justify-content: flex-start;
 }
 
-.measurement-row{
+.measurement-row {
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -13,7 +13,11 @@
     justify-content: space-between;
 }
 
-.icon:hover{
-    color:red;
+.icon:hover {
+    color: red;
     cursor: pointer;
+}
+
+.black-text {
+    color: black
 }
