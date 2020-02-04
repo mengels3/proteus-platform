@@ -143,7 +143,6 @@ const AddMeasurementPointModal = () => {
                                     />
                                 </Form.Group>
                                 <button type="submit">Submit</button>
-                                <p>{JSON.stringify(values)}</p>
                             </Form>
                         )}
                 </Formik>
