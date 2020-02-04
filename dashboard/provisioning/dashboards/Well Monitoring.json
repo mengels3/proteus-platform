@@ -1,0 +1,373 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "An overview over all the wells monitored by the platform",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "panels": [
+    {
+      "circleMaxSize": "5",
+      "circleMinSize": "1",
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "datasource": null,
+      "decimals": 0,
+      "description": "",
+      "esMetric": "Count",
+      "gridPos": {
+        "h": 22,
+        "w": 9,
+        "x": 0,
+        "y": 0
+      },
+      "hideEmpty": false,
+      "hideZero": false,
+      "id": 4,
+      "initialZoom": "5",
+      "locationData": "table",
+      "mapCenter": "custom",
+      "mapCenterLatitude": "-26.724895",
+      "mapCenterLongitude": " -69.705463",
+      "maxDataPoints": 1,
+      "mouseWheelZoom": true,
+      "options": {},
+      "showLegend": true,
+      "stickyLabels": false,
+      "tableQueryOptions": {
+        "geohashField": "geohash",
+        "labelField": "tooltip",
+        "latitudeField": "w_lat",
+        "longitudeField": "w_long",
+        "metricField": "level_percentage",
+        "queryType": "coordinates"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  m_timestamp AS \"time\",\r\n  cast(m_value as double precision) / ( well.w_diameter * well.w_maxdepth ) as level_percentage,\r\n  w_lat,\r\n  w_long,\r\n  ('<span style=\"color:black\">Water Level of Well \"' || w_name || '\"</span>')  as tooltip\r\nFROM measurement\r\nJOIN well on m_fk_wellid = w_id\r\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\r\nWHERE sensor_type.st_value = 'level'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "w_lat"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "well",
+          "timeColumn": "w_altitude",
+          "timeColumnType": "float8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0,10",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Locations of the Wells",
+      "type": "grafana-worldmap-panel",
+      "unitPlural": "",
+      "unitSingle": "",
+      "unitSingular": "Water level in percent",
+      "valueName": "total"
+    },
+    {
+      "columns": [],
+      "datasource": null,
+      "description": "See all Well's and their average KPI's",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 15,
+        "x": 9,
+        "y": 0
+      },
+      "id": 2,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/^Device Id$/",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "/^w_id$/",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTooltip": "Show details about this Well",
+          "linkUrl": "/d/GFmgN7EWk/well-inspection?orgId=1&var-w_id=${__cell_0}",
+          "mappingType": 1,
+          "pattern": "/^WELL$/",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT WELL.w_id, w_name as \"WELL\", w_device_id as \"Device Id\", max(temp.temp_value) as \"Average temperature\",max(ph.ph_value) as \"Average PH value\", max(t.m_timestamp) as \"Last Update\",max(level.level_value) as \"Average water level\" FROM WELL \r\nLEFT OUTER JOIN (SELECT w_id, avg(cast(m_value as double precision)) as temp_value\r\n      FROM measurement\r\n      JOIN well on m_fk_wellid = w_id\r\n      JOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\r\n      WHERE sensor_type.st_value = 'temp' and $__timeFilter(m_timestamp)\r\n      GROUP BY w_id) as temp on temp.w_id = WELL.w_id \r\nLEFT OUTER JOIN (SELECT w_id,m_timestamp\r\n      FROM measurement\r\n      JOIN well on m_fk_wellid = w_id\r\n      ) as t on t.w_id = WELL.w_id   \r\nLEFT OUTER JOIN (SELECT w_id, avg(cast(m_value as double precision)) as level_value\r\n      FROM measurement\r\n      JOIN well on m_fk_wellid = w_id\r\n      JOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\r\n      WHERE sensor_type.st_value = 'level' and $__timeFilter(m_timestamp)\r\n      GROUP BY w_id) as level on level.w_id = WELL.w_id   \r\nLEFT OUTER JOIN (SELECT w_id,avg(cast(m_value as double precision)) as ph_value\r\n      FROM measurement\r\n      JOIN well on m_fk_wellid = w_id\r\n      JOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\r\n      WHERE sensor_type.st_value = 'ph' and $__timeFilter(m_timestamp)\r\n      GROUP BY w_id) as ph on ph.w_id = WELL.w_id  \r\nGROUP BY WELL.w_id,w_name,w_device_id",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Well Overview",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 15,
+        "x": 9,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "m_value",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as double precision) ,\n  m_value\nFROM measurement\nWHERE\n  $__timeFilter(m_timestamp)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "m_value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamptz",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Panel Title",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 21,
+  "style": "dark",
+  "tags": [
+    "overview",
+    "jump",
+    "well",
+    "chile"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Well Monitoring",
+  "uid": "LQQxFKsZz",
+  "version": 11
+}

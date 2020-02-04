@@ -64,6 +64,12 @@ class WellService(
         }
     }
 
+    @Transactional
+    fun delete(id: UUID) {
+        logger.debug("Deleting well for ID: $id")
+        wellRepository.deleteById(id)
+    }
+
     private fun copyAndUpdate(requestWell: Well, persistentWell: Well, sensorTypes: List<SensorType>): Well {
         val w = persistentWell.copy(
                 altitude = requestWell.altitude,

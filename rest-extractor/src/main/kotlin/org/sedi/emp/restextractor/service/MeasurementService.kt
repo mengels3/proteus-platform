@@ -88,15 +88,15 @@ class MeasurementService(
     }
 
     private fun findWellAndSaveMeasurements(measurements: List<Measurement>, deviceId: String): Optional<List<Measurement>> {
-        logger.debug("Looking up well for device ID $deviceId ...")
+        logger.trace("Looking up well for device ID $deviceId ...")
         val maybeWell = wellRepository.findByDeviceId(deviceId)
 
         return if (maybeWell.isPresent) {
             val well = maybeWell.get()
 
-            logger.debug("Saving measurements:")
+            logger.trace("Saving measurements:")
             measurements
-                    .forEach { logger.debug(" -> $it") }
+                    .forEach { logger.trace(" -> $it") }
 
             val savedMeasurements = measurements
                     .asSequence()
@@ -106,7 +106,7 @@ class MeasurementService(
 
         } else {
             logger.info("Couldn't find well for deviceId $deviceId!")
-            Optional.empty<List<Measurement>>()
+            Optional.empty()
         }
     }
 

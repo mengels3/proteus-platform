@@ -12,28 +12,111 @@
       }
     ]
   },
+  "description": "A Detailed Overview of one Well",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
+  "iteration": 1580814587290,
   "links": [],
   "panels": [
     {
-      "aliasColors": {},
-      "cacheTimeout": null,
-      "datasource": "well",
-      "doInit": {},
-      "format": "short",
+      "circleMaxSize": "10",
+      "circleMinSize": 2,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "datasource": null,
+      "decimals": 2,
+      "description": "Shows the Location of the selected Well",
+      "esMetric": "Count",
       "gridPos": {
-        "h": 8,
+        "h": 15,
         "w": 12,
         "x": 0,
         "y": 0
       },
+      "hideEmpty": false,
+      "hideZero": false,
+      "id": 4,
+      "initialZoom": "4",
+      "locationData": "table",
+      "mapCenter": "custom",
+      "mapCenterLatitude": "-26.724895",
+      "mapCenterLongitude": " -69.705463",
+      "maxDataPoints": 1,
+      "mouseWheelZoom": true,
+      "options": {},
+      "showLegend": true,
+      "stickyLabels": false,
+      "tableQueryOptions": {
+        "geohashField": "geohash",
+        "labelField": "tooltip",
+        "latitudeField": "w_lat",
+        "longitudeField": "w_long",
+        "metricField": "level_percentage",
+        "queryType": "coordinates"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  m_timestamp AS \"time\",\r\n  cast(m_value as double precision) / ( well.w_diameter * well.w_maxdepth ) as level_percentage,\r\n  w_lat,\r\n  w_long,\r\n  ('<span style=\"color:black\">Water Level of Well ' || w_name || '</span>')  as tooltip\r\nFROM measurement\r\nJOIN well on m_fk_wellid = w_id\r\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\r\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'level'\r\nORDER BY time desc LIMIT 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "m_water_level"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0.1,0.25",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Well Location",
+      "transparent": true,
+      "type": "grafana-worldmap-panel",
+      "unitPlural": "",
+      "unitSingle": "",
+      "unitSingular": "Water Level in Percent",
+      "valueName": "total"
+    },
+    {
+      "aliasColors": {},
+      "cacheTimeout": null,
+      "datasource": null,
+      "description": "The fill of the well in percent",
+      "doInit": {},
+      "format": "short",
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
       "handleMetric": {},
-      "id": 8,
+      "id": 2,
       "interval": null,
-      "js_code": "\nconsole.log(ctrl.series);\nvar percentage = 0;\nif(ctrl.series && ctrl.series[0] && ctrl.series[0].datapoints){\n    var percentage = ctrl.series[0].datapoints[0][0] * 100;\n}\nsvgnode.getElementById(\"stop1\").setAttribute(\"offset\",percentage+\"%\");\nsvgnode.getElementById(\"stop2\").setAttribute(\"offset\",percentage+\"%\");\n",
+      "js_code": "console.log(ctrl.data);\nvar percentage = 0;\nif(ctrl.data && ctrl.data[0] && ctrl.data[0].rows && ctrl.data[0].rows[0]){\n    var percentage = ctrl.data[0].rows[0][\"percentage\"] * 100;\n}\nsvgnode.getElementById(\"stop1\").setAttribute(\"offset\",percentage+\"%\");\nsvgnode.getElementById(\"stop2\").setAttribute(\"offset\",percentage+\"%\");",
       "js_init_code": "",
       "links": [],
       "maxDataPoints": 3,
@@ -740,150 +823,40 @@
       "svg_data": "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\r\n<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->\r\n<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n\t viewBox=\"0 0 512 512\" style=\"enable-background:new 0 0 512 512;\" xml:space=\"preserve\">\r\n\t \r\n<g>\r\n\t<g>\r\n\t    <linearGradient y2=\"0%\" x2=\"100%\" y1=\"100%\" x1=\"100%\" id=\"lg\">\r\n\t\t\t<stop stop-color=\"royalblue\" offset=\"50%\" id=\"stop1\"/>\r\n\t\t\t<stop stop-color=\"transparent\" offset=\"50%\" id=\"stop2\"/>\r\n\t\t</linearGradient>\r\n\t\t<rect x=\"0\" y=\"278.261\" width=\"434\" height=\"234\" fill=\"url(#lg)\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"66.783\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"333.913\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect y=\"367.304\" width=\"33.391\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M417.391,278.261h-16.696v55.652h33.391v-38.956C434.087,285.736,426.612,278.261,417.391,278.261z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"267.13\" y=\"278.261\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"200.348\" y=\"367.304\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"133.565\" y=\"278.261\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M400.696,456.348V512h16.696c9.22,0,16.696-7.475,16.696-16.696v-38.956H400.696z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"133.565\" y=\"456.348\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<rect x=\"267.13\" y=\"456.348\" width=\"100.174\" height=\"55.652\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M0,456.348v38.956C0,504.525,7.475,512,16.696,512h83.478v-55.652H0z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M16.696,278.261C7.475,278.261,0,285.736,0,294.957v38.956h100.174v-55.652H16.696z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n\t<g>\r\n\t\t<path d=\"M495.304,100.174h-27.826V50.087c0-9.217-7.479-16.696-16.696-16.696h-50.087V16.696C400.696,7.479,393.217,0,384,0\r\n\t\t\ts-16.696,7.479-16.696,16.696v16.696h-36.253C324.175,13.94,305.633,0,283.826,0H150.261c-21.807,0-40.349,13.94-47.225,33.391\r\n\t\t\tH66.783V16.696C66.783,7.479,59.304,0,50.087,0S33.391,7.479,33.391,16.696V244.87h33.391V66.783h36.253\r\n\t\t\tc6.876,19.452,25.419,33.391,47.225,33.391h50.087v33.391h-38.957c-5.239,0-10.174,2.456-13.326,6.642\r\n\t\t\tc-3.163,4.185-4.163,9.609-2.728,14.641l22.261,77.913c2.055,7.164,8.598,12.109,16.055,12.109h66.783\r\n\t\t\tc7.456,0,14-4.945,16.055-12.109l22.261-77.913c1.435-5.032,0.435-10.457-2.728-14.641c-3.152-4.185-8.087-6.642-13.326-6.642\r\n\t\t\th-38.957v-33.391h50.087c21.807,0,40.349-13.94,47.225-33.391h36.253V244.87h33.391V66.783h33.391v50.087\r\n\t\t\tc0,9.217,7.479,16.696,16.696,16.696h44.522c9.217,0,16.696-7.479,16.696-16.696S504.521,100.174,495.304,100.174z\"/>\r\n\t</g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n<g>\r\n</g>\r\n</svg>\r\n",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "well",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT \"water_level\" FROM \"well\" WHERE $timeFilter order by time desc LIMIT 1",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
           "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  w_lat,\n  w_long,\n  w_name,\n  (cast(m_value as double precision)/(w_maxdepth)) as percentage\nFROM measurement\nJOIN well w on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and $__timeFilter(m_timestamp) and sensor_type.st_value = 'level'\nORDER BY time desc LIMIT 1\n",
           "refId": "A",
-          "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "water_level"
+                  "m_water_level"
                 ],
-                "type": "field"
+                "type": "column"
               }
             ]
           ],
-          "tags": []
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Last Measurement ",
+      "title": "Current water level in percent",
+      "transparent": true,
       "type": "marcuscalidus-svg-panel",
       "useSVGBuilder": false
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "well",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 22,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 4,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "well",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT \"water_level\" FROM \"well\" WHERE $timeFilter",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "water_level"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Water Level over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "short",
-          "label": "Water Level in Meter",
-          "logBase": 1,
-          "max": "2",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     },
     {
       "cacheTimeout": null,
@@ -894,7 +867,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "well",
+      "datasource": null,
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -904,12 +877,12 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 0,
-        "y": 8
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 0
       },
-      "id": 2,
+      "id": 20,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -949,46 +922,646 @@
       "tableColumn": "",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "well",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  w_name\nFROM\n  well\nWHERE\n  w_id = '[[w_id]]'\n",
           "refId": "A",
-          "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "water_level"
+                  "value"
                 ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
+                "type": "column"
               }
             ]
           ],
-          "tags": []
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": "",
       "timeFrom": null,
       "timeShift": null,
-      "title": "Average Water Level",
+      "title": "Well name",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "first"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 7
+      },
+      "id": 16,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "first"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 14,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 6.5
+              },
+              {
+                "color": "red",
+                "value": 8
+              }
+            ],
+            "title": ""
+          },
+          "limit": 1,
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.5.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  w_name,\n  cast(m_value as double precision)\nFROM measurement\nJOIN well w on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and $__timeFilter(m_timestamp) and sensor_type.st_value = 'ph'\nORDER BY time desc LIMIT 1\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current Ph value",
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 7
+      },
+      "id": 18,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "first"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 45,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "light-orange",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 4
+              },
+              {
+                "color": "light-orange",
+                "value": 30
+              }
+            ],
+            "unit": "celsius"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.5.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  w_name,\n  cast(m_value as double precision)\nFROM measurement\nJOIN well w on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and $__timeFilter(m_timestamp) and sensor_type.st_value = 'temp'\nORDER BY time desc LIMIT 1\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current Temperature",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": null,
+      "description": "Shows the development of the water level in the selected timeframe",
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as double precision) as water_level_value,\n  w_name\nFROM measurement\nJOIN well on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'level' and $__timeFilter(m_timestamp)\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "m_water_level"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Water level over time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Water level in meter",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 23
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as double precision) as ph_value,\n  w_name\nFROM measurement\nJOIN well on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'ph' and  $__timeFilter(m_timestamp)\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "m_phvalue"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 9,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": true,
+          "op": "lt",
+          "value": 6.5,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ph-Value over time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Ph-Value",
+          "logBase": 1,
+          "max": "14",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "Time",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 23
+      },
+      "hiddenSeries": false,
+      "id": 14,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as double precision) as tmp_value,\n  w_name\nFROM measurement\nJOIN well on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'temp' and $__timeFilter(m_timestamp)\nORDER BY time\n  \n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Temperature over time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": "Temperature in °C",
+          "logBase": 1,
+          "max": "35",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "id": 8,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "m_value",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as decimal),\n  w_name\nFROM measurement\nJOIN well on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'ph' and $__timeFilter(m_timestamp)\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "m_phvalue"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average Ph-Value",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1001,111 +1574,173 @@
       "valueName": "avg"
     },
     {
-      "columns": [],
-      "datasource": "well",
-      "fontSize": "100%",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "description": "",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
       "gridPos": {
-        "h": 9,
+        "h": 4,
         "w": 12,
-        "x": 0,
-        "y": 13
+        "x": 12,
+        "y": 31
       },
-      "id": 6,
-      "options": {},
-      "pageSize": null,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
-      },
-      "styles": [
+      "id": 10,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
         {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
+          "name": "value to text",
+          "value": 1
         },
         {
-          "alias": "",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
+          "name": "range to text",
+          "value": 2
         }
       ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "well",
-          "orderByTime": "ASC",
-          "policy": "autogen",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  m_timestamp AS \"time\",\n  cast(m_value as decimal),\n  w_name\nFROM measurement\nJOIN well on m_fk_wellid = w_id\nJOIN sensor_type on measurement.sensor_type_st_id = sensor_type.st_id\nWHERE w_id = '[[w_id]]' and sensor_type.st_value = 'temp' and $__timeFilter(m_timestamp)\nORDER BY time",
           "refId": "A",
-          "resultFormat": "table",
           "select": [
             [
               {
                 "params": [
-                  "id"
+                  "m_temperature"
                 ],
-                "type": "field"
-              },
-              {
-                "params": [
-                  "Well Id"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "water_level"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [
-                  "Water Level (in m)"
-                ],
-                "type": "alias"
+                "type": "column"
               }
             ]
           ],
-          "tags": []
+          "table": "measurement",
+          "timeColumn": "m_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
+      "thresholds": "",
       "timeFrom": null,
       "timeShift": null,
-      "title": "Water Level Values",
-      "transform": "table",
-      "type": "table"
+      "title": "Average Temperature",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 20,
+  "schemaVersion": 21,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "drilldown",
+    "well",
+    "detailed"
+  ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "9fd7cf1c-f6a5-431a-a611-51205d33a5e4",
+          "value": "9fd7cf1c-f6a5-431a-a611-51205d33a5e4"
+        },
+        "datasource": "sedi",
+        "definition": "SELECT\n    w_id\nFROM well",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Select target Well",
+        "multi": false,
+        "name": "w_id",
+        "options": [],
+        "query": "SELECT\n    w_id\nFROM well",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
+    "nowDelay": "3h",
     "refresh_intervals": [
-      "5s"
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
     ]
   },
-  "timezone": "",
-  "title": "Water Level Monitoring",
-  "uid": "IbLNiD-Zz",
-  "version": 8
+  "timezone": "utc",
+  "title": "Well Inspection",
+  "uid": "GFmgN7EWk",
+  "version": 3
 }

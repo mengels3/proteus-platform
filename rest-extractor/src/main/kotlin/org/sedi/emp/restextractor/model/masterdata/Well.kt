@@ -22,7 +22,7 @@ data class Well(
         val latitude: Double,
 
         @Column(name = "w_long")
-        val longtitude: Double,
+        val longitude: Double,
 
         @Column(name = "w_altitude")
         val altitude: Double,
@@ -33,6 +33,6 @@ data class Well(
         @Column(name = "w_diameter")
         val diameter: Double,
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST], fetch = FetchType.LAZY)
         val sensorTypes: MutableList<SensorType>
 )

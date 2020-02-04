@@ -9,6 +9,10 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.filter.CommonsRequestLoggingFilter
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+
 
 @Configuration
 class RestExtractorConfiguration {
@@ -43,5 +47,14 @@ class RestExtractorConfiguration {
         commonsRequestLoggingFilter.setIncludePayload(true)
         commonsRequestLoggingFilter.setMaxPayloadLength(10000)
         return commonsRequestLoggingFilter
+    }
+
+    @Bean
+    fun webMvcConfigurer(): WebMvcConfigurer{
+        return object: WebMvcConfigurer{
+            override fun addCorsMappings(registry: CorsRegistry) {
+                registry.addMapping("/**").allowedMethods("GET","PUT", "POST", "UPDATE", "DELETE")
+            }
+        }
     }
 }
