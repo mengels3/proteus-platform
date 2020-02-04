@@ -62,7 +62,7 @@ class PredictionController(private val mapper:ObjectMapper,private val measureRe
 		}
 		val root:ArrayNode = mapper.createArrayNode();
 		val obj:ObjectNode = mapper.createObjectNode();
-		obj.put("target","bla");
+		obj.put("target","prediction");
 		var resultarray:ArrayNode = mapper.valueToTree(result);
 		obj.putArray("datapoints").addAll(resultarray);
 		root.add(obj);
@@ -70,7 +70,7 @@ class PredictionController(private val mapper:ObjectMapper,private val measureRe
 		//new approach
 		val all = wellRepo.findAll();
 		val well = all.elementAt(0)
-		val sensorType:String = "level";
+		val sensorType:String = targetSensor;
 		val measures:List<Measurement> = measureRepo.loadHistoricData(well.id, sensorType,nowDate.minusHours(3),nowDate);
 		val histData:DoubleArray = DoubleArray(measures.count());
 		val stepsSizeSeconds = DoubleArray(measures.count()-1);

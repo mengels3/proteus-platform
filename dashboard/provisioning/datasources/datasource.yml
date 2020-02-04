@@ -21,4 +21,4 @@ datasources:
       sslmode: "disable"
 - name: prediction
   type: grafana-simple-json-datasource
-  url: http://localhost:8080/prediction
+  url: http://platformapp:8080/prediction/
