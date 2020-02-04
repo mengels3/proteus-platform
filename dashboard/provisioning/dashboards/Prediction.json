@@ -97,7 +97,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Prediction",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -240,5 +240,5 @@
   "timezone": "",
   "title": "Prediction",
   "uid": "tB7n_d8Wz",
-  "version": 4
+  "version": 6
 }

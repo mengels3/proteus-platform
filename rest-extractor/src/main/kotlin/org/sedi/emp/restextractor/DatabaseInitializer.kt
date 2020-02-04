@@ -19,6 +19,9 @@ open class DatabaseInitializer(
     }
 
     fun initializeTestData() {
+        if (wellService.findAll().count() > 0) {
+            return;
+        }
         val ph = sensorTypeService.findOrCreate(SensorType(sensorTypeValue = "ph"))
         val temp = sensorTypeService.findOrCreate(SensorType(sensorTypeValue = "temp"))
         val level = sensorTypeService.findOrCreate(SensorType(sensorTypeValue = "level"))
