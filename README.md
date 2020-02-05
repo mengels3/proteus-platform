@@ -2,7 +2,7 @@
 An environmental monitoring platform based on IoT-sensor networks.
 
 ## Motivation
-A platform and hardware artifact that aims at helping to tackle the ongoing fresh water crisis in rural parts of Chile. Was build by a team of graduatae students during the 2019/2020 semester's course on [Systems Engineering for Digital Innovations](https://www.is4.uni-koeln.de/de/teaching/master-modules/systems-engineering-for-digital-innovations/) at University of Cologne.
+A platform and hardware artifact that aims at helping to tackle the ongoing fresh water crisis in rural parts of Chile. Was build by a team of graduate students during the 2019/2020 semester's course on [Systems Engineering for Digital Innovations](https://www.is4.uni-koeln.de/de/teaching/master-modules/systems-engineering-for-digital-innovations/) at University of Cologne.
 
 ## Components
 ### arduino_skeches
